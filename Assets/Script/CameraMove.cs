@@ -13,10 +13,10 @@ public class CameraMove : MonoBehaviour {
         {
             gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 20 * Time.deltaTime);
         }
-        //if (Input.GetKey(KeyCode.RightArrow))
-        //{
-        //    gameObject.transform.RotateAround(Vector3.zero, Vector3.down, 20 * Time.deltaTime);
-        //}
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            gameObject.transform.RotateAround(Vector3.zero, Vector3.down, 20 * Time.deltaTime);
+        }
 
         //if (Input.GetKey(KeyCode.UpArrow))
         //{
