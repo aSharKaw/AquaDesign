@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//カメラ移動用スクリプト
 public class CameraMove : MonoBehaviour {
-
-	void Start () {
-		
-	}
 	
-	void Update () {
+	void Update ()
+    {
 		if(Input.GetKey(KeyCode.LeftArrow))
         {
             gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 20 * Time.deltaTime);

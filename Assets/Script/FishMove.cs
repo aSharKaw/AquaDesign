@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//魚移動用スクリプト
 public class FishMove : MonoBehaviour {
 
     private Vector3 _target_position;
@@ -13,12 +14,13 @@ public class FishMove : MonoBehaviour {
     private GameObject _child;
     private Animator _anima;
 
-	void Start () {
+	void Start ()
+    {
         _swim_flug = false;
         _count = 0;
         _wait_count = 0;
 
-        move_speed = 0.001f;
+        move_speed = 0.002f;
 
         _target_position = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
         _child = transform.FindChild("body").gameObject;
@@ -26,8 +28,8 @@ public class FishMove : MonoBehaviour {
         _anima = _child.GetComponent<Animator>();
     }
 	
-	void Update () {
-        //swim(target_position);
+	void Update ()
+    {
         if(!_swim_flug)
         {
             idle();
@@ -47,6 +49,7 @@ public class FishMove : MonoBehaviour {
         }
     }
 
+    //アイドル時
     bool idle()
     {
         if (_count == 0)
@@ -64,6 +67,7 @@ public class FishMove : MonoBehaviour {
         return true;
     }
 
+    //移動時
     bool swim(Vector3 target_position)
     {
         if(target_position == Vector3.MoveTowards(this.transform.position, target_position, move_speed))
