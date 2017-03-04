@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c457aa51bffc02a4589d9dadc0bc49c9
+timeCreated: 1488657122
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: JK Gothic M
+  fontNames:
+  - JK Gothic M
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
