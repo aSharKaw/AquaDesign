@@ -4,16 +4,25 @@ using UnityEngine;
 
 //カメラ移動用スクリプト
 public class CameraMove : MonoBehaviour {
-	
+
+    private int count;
+
+    void Start()
+    {
+        count = 0;
+    }
+
 	void Update ()
     {
-		if(Input.GetKey(KeyCode.LeftArrow))
+		if(Input.GetKey(KeyCode.LeftArrow) && count < 2 * 45)
         {
             gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 20 * Time.deltaTime);
+            count++;
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && count > -2 * 45)
         {
             gameObject.transform.RotateAround(Vector3.zero, Vector3.down, 20 * Time.deltaTime);
+            count--;
         }
 
         //if (Input.GetKey(KeyCode.UpArrow))

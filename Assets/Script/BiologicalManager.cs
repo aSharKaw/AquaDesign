@@ -11,8 +11,11 @@ public class BiologicalManager : MonoBehaviour {
     private GameObject Leaf;
     [SerializeField]
     private GameObject Anubias;
+    [SerializeField]
+    private GameObject TigerOscar;
 
-    private int _fish_count;
+    private int _neonTetra_count;
+    private int _tigerOscar_count;
 
 	void Start ()
     {
@@ -28,26 +31,46 @@ public class BiologicalManager : MonoBehaviour {
         {
             Anubias = Resources.Load("Prefub/Anubias") as GameObject;
         }
+        if (TigerOscar == null)
+        {
+            TigerOscar = Resources.Load("Prefub/TigerOscar") as GameObject;
+        }
 
-        _fish_count = 0;
+        _neonTetra_count = 0;
+        _tigerOscar_count = 0;
     }
 	
-    public void FishCreate()
+    public void NeonTetraCreate()
     {
         GameObject _fish;
         _fish = Instantiate(NeonTetra);
-        _fish.name = "NeonTetra" + _fish_count;
-        _fish_count++;
+        _fish.name = "NeonTetra" + _neonTetra_count;
+        _neonTetra_count++;
     }
 
-    public void FishDelete()
+    public void NeonTetraDelete()
     {
-        _fish_count--;
-        GameObject _fish = GameObject.Find("NeonTetra" + _fish_count);
+        _neonTetra_count--;
+        GameObject _fish = GameObject.Find("NeonTetra" + _neonTetra_count);
         Destroy(_fish);
     }
 
-	void Update ()
+    public void TigerOscarCreate()
+    {
+        GameObject _fish;
+        _fish = Instantiate(TigerOscar);
+        _fish.name = "TigerOscar" + _tigerOscar_count;
+        _tigerOscar_count++;
+    }
+
+    public void TigerOscarDelete()
+    {
+        _tigerOscar_count--;
+        GameObject _fish = GameObject.Find("TigerOscar" + _neonTetra_count);
+        Destroy(_fish);
+    }
+
+    void Update ()
     {
         
 	}
