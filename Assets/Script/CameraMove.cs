@@ -14,6 +14,7 @@ public class CameraMove : MonoBehaviour {
 
 	void Update ()
     {
+<<<<<<< HEAD
 		if(Input.GetKey(KeyCode.LeftArrow) && count < 0.5f * 60)
         {
             gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 1);
@@ -22,6 +23,16 @@ public class CameraMove : MonoBehaviour {
         if (Input.GetKey(KeyCode.RightArrow) && count > -0.5f * 60)
         {
             gameObject.transform.RotateAround(Vector3.zero, Vector3.down, 1);
+=======
+		if(Input.GetKey(KeyCode.LeftArrow) && count < 2 * 45)
+        {
+            gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 20 * Time.deltaTime);
+            count++;
+        }
+        if (Input.GetKey(KeyCode.RightArrow) && count > -2 * 45)
+        {
+            gameObject.transform.RotateAround(Vector3.zero, Vector3.down, 20 * Time.deltaTime);
+>>>>>>> 747f9e808c0244cd8de86cb043a057a8716cac94
             count--;
         }
 
