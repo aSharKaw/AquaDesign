@@ -5,11 +5,15 @@ using UnityEngine;
 public class BiologicalManager : MonoBehaviour {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1273a02f36410d686f8ae0e274ad16750704c987
     //テスト
     //[System.NonSerialized]
     private string _fish_name;
 
     private int _fish_count;
+<<<<<<< HEAD
 =======
     //外部ファイル読み込むまでの代理参照
     [SerializeField]
@@ -21,12 +25,15 @@ public class BiologicalManager : MonoBehaviour {
     [SerializeField]
     private GameObject TigerOscar;
 >>>>>>> 747f9e808c0244cd8de86cb043a057a8716cac94
+=======
+>>>>>>> 1273a02f36410d686f8ae0e274ad16750704c987
 
     private int _neonTetra_count;
     private int _tigerOscar_count;
 
 	void Start ()
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	    if(NeonTetra == null)
@@ -46,11 +53,14 @@ public class BiologicalManager : MonoBehaviour {
             TigerOscar = Resources.Load("Prefub/TigerOscar") as GameObject;
         }
 >>>>>>> 747f9e808c0244cd8de86cb043a057a8716cac94
+=======
+>>>>>>> 1273a02f36410d686f8ae0e274ad16750704c987
 
         _neonTetra_count = 0;
         _tigerOscar_count = 0;
     }
 	
+<<<<<<< HEAD
 <<<<<<< HEAD
     public void FishCreate(string fish_name)
     {
@@ -66,6 +76,14 @@ public class BiologicalManager : MonoBehaviour {
         _fish.name = "NeonTetra" + _neonTetra_count;
         _neonTetra_count++;
 >>>>>>> 747f9e808c0244cd8de86cb043a057a8716cac94
+=======
+    public void FishCreate(string fish_name)
+    {
+        GameObject _fish = Resources.Load("Prefub/" + fish_name) as GameObject;
+        _fish = Instantiate(_fish);
+        _fish.name = fish_name + _fish_count;
+        _fish_count++;
+>>>>>>> 1273a02f36410d686f8ae0e274ad16750704c987
     }
 
     public void NeonTetraDelete()
@@ -75,6 +93,7 @@ public class BiologicalManager : MonoBehaviour {
         Destroy(_fish);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     public void TigerOscarCreate()
@@ -93,6 +112,8 @@ public class BiologicalManager : MonoBehaviour {
     }
 
 >>>>>>> 747f9e808c0244cd8de86cb043a057a8716cac94
+=======
+>>>>>>> 1273a02f36410d686f8ae0e274ad16750704c987
     void Update ()
     {
         
