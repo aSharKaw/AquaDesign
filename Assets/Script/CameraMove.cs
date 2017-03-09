@@ -14,14 +14,14 @@ public class CameraMove : MonoBehaviour {
 
 	void Update ()
     {
-		if(Input.GetKey(KeyCode.LeftArrow) && count < 2 * 45)
+		if(Input.GetKey(KeyCode.LeftArrow) && count < 0.5f * 60)
         {
-            gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 20 * Time.deltaTime);
+            gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 1);
             count++;
         }
-        if (Input.GetKey(KeyCode.RightArrow) && count > -2 * 45)
+        if (Input.GetKey(KeyCode.RightArrow) && count > -0.5f * 60)
         {
-            gameObject.transform.RotateAround(Vector3.zero, Vector3.down, 20 * Time.deltaTime);
+            gameObject.transform.RotateAround(Vector3.zero, Vector3.down, 1);
             count--;
         }
 
