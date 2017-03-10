@@ -6,7 +6,7 @@ public class HillDrag : MonoBehaviour {
     [SerializeField]
     private Camera _camera;
 
-    Ray _ray;
+    //Ray _ray;
     [SerializeField]
     private LayerMask mask;
 
@@ -18,10 +18,10 @@ public class HillDrag : MonoBehaviour {
         }
     }
 
-    Vector3 GetRay(Ray ray)
+    Vector3 GetRay(/*Ray ray*/)
     {
         RaycastHit hit;
-        ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, 1.0f, mask))
         {
@@ -32,7 +32,7 @@ public class HillDrag : MonoBehaviour {
 
     private void OnMouseDrag()
     {
-        this.transform.position = GetRay(_ray);
+        this.transform.position = GetRay(/*_ray*/);
     }
 
 }
