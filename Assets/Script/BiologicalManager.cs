@@ -11,17 +11,20 @@ public class BiologicalManager : MonoBehaviour {
     private int _fish_count;
 
     private int _neonTetra_count;
-    private int _tigerOscar_count;
+    //private int _tigerOscar_count;
+
+    //AssetBundle assetBundle;
 
 	void Start ()
     {
-
+        //assetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/resources");
         _neonTetra_count = 0;
-        _tigerOscar_count = 0;
+        //_tigerOscar_count = 0;
     }
-	
+
     public void FishCreate(string fish_name)
     {
+        //GameObject _fish = assetBundle.LoadAsset<GameObject>(fish_name);
         GameObject _fish = Resources.Load("Prefub/" + fish_name) as GameObject;
         _fish = Instantiate(_fish);
         _fish.name = fish_name + _fish_count;

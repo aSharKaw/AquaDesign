@@ -39,8 +39,8 @@ public class UICreate : MonoBehaviour {
     }
 
     void Start () {
-        Create("NeonTetra", "ネオンテトラ", new Vector2(730, 350));
-        Create("TigerOscar", "タイガーオスカー", new Vector2(730, 230));
+        Create("NeonTetra", "ネオンテトラ", new Vector2(780, 400));
+        Create("TigerOscar", "タイガーオスカー", new Vector2(780, 330));
     }
     
 }
