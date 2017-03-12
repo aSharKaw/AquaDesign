@@ -22,25 +22,49 @@ public class UICreate : MonoBehaviour {
         GameObject fishUI;
         fishUI = Instantiate(_fishUI, position, Quaternion.identity, canvas.transform);
 
-        //UI内のテキストの変更
-        fishUI.transform.FindChild("FishName").GetComponent<Text>().text = fish_name.ToString();
-
         //UI画像の参照
-        Sprite sprite = Resources.Load("Image/Fish/" + id, typeof(Sprite)) as Sprite;
-        Image fishImage = fishUI.transform.FindChild("FishImage").GetComponent<Image>();
-        fishImage.sprite = sprite;
+        Sprite spritePlus = Resources.Load("Image/UI/" + id + "Plus", typeof(Sprite)) as Sprite;
+        Sprite spriteMinus = Resources.Load("Image/UI/" + id + "Minus", typeof(Sprite)) as Sprite;
+        Image createButtonImage = fishUI.transform.FindChild("CreateButton").GetComponent<Image>();
+        Image deleteButtonImage = fishUI.transform.FindChild("DeleteButton").GetComponent<Image>();
+        createButtonImage.sprite = spritePlus;
+        deleteButtonImage.sprite = spriteMinus;
 
         //OnClickイベントの作成
         BiologicalManager _manager = GetComponent<BiologicalManager>();
         Button createButton = fishUI.transform.FindChild("CreateButton").GetComponent<Button>();
         createButton.onClick.AddListener(() => _manager.FishCreate(id));
         Button deleteButton = fishUI.transform.FindChild("DeleteButton").GetComponent<Button>();
-        deleteButton.onClick.AddListener(_manager.NeonTetraDelete);
+        deleteButton.onClick.AddListener(() => _manager.FishDelete(id));
     }
 
+    ////UIの作成
+    //void Create(string id, string fish_name, Vector2 position)
+    //{
+    //    //必要オブジェクトの参照と生成
+    //    GameObject canvas = GameObject.Find("Canvas");
+    //    GameObject fishUI;
+    //    fishUI = Instantiate(_fishUI, position, Quaternion.identity, canvas.transform);
+
+    //    //UI内のテキストの変更
+    //    fishUI.transform.FindChild("FishName").GetComponent<Text>().text = fish_name.ToString();
+
+    //    //UI画像の参照
+    //    Sprite sprite = Resources.Load("Image/Fish/" + id, typeof(Sprite)) as Sprite;
+    //    Image fishImage = fishUI.transform.FindChild("FishImage").GetComponent<Image>();
+    //    fishImage.sprite = sprite;
+
+    //    //OnClickイベントの作成
+    //    BiologicalManager _manager = GetComponent<BiologicalManager>();
+    //    Button createButton = fishUI.transform.FindChild("CreateButton").GetComponent<Button>();
+    //    createButton.onClick.AddListener(() => _manager.FishCreate(id));
+    //    Button deleteButton = fishUI.transform.FindChild("DeleteButton").GetComponent<Button>();
+    //    deleteButton.onClick.AddListener(_manager.NeonTetraDelete);
+    //}
+
     void Start () {
-        Create("NeonTetra", "ネオンテトラ", new Vector2(780, 400));
-        Create("TigerOscar", "タイガーオスカー", new Vector2(780, 330));
+        Create("NeonTetra", "ネオンテトラ", new Vector2(800, 550));
+        Create("TigerOscar", "タイガーオスカー", new Vector2(800, 450));
     }
     
 }
