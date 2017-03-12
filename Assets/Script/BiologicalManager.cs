@@ -24,18 +24,31 @@ public class BiologicalManager : MonoBehaviour {
 
     public void FishCreate(string fish_name)
     {
+        _fish_count++;
         //GameObject _fish = assetBundle.LoadAsset<GameObject>(fish_name);
         GameObject _fish = Resources.Load("Prefub/" + fish_name) as GameObject;
-        _fish = Instantiate(_fish);
-        _fish.name = fish_name + _fish_count;
-        _fish_count++;
+        _fish = Instantiate(_fish, new Vector3(Random.Range(0, 0), Random.Range(0, 0), 0), Quaternion.Euler(new Vector3(0, 90, 0)));
+        _fish.name = fish_name + _fish_count;     
     }
 
-    public void NeonTetraDelete()
+    public void FishDelete(string fish_name)
     {
-        _neonTetra_count--;
-        GameObject _fish = GameObject.Find("NeonTetra" + _neonTetra_count);
-        Destroy(_fish);
+        if(_fish_count > 0)
+        {
+            int temp_count = _fish_count;
+            GameObject _fish = GameObject.Find(fish_name + _fish_count);
+            while (_fish != null)
+            {
+                temp_count--;
+                _fish = GameObject.Find(fish_name + _fish_count);
+                if (temp_count < 0)
+                {
+                    break;
+                }
+            }
+            _fish_count--;
+            Destroy(_fish);
+        }
     }
 
     void Update ()
