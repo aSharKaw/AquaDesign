@@ -10,25 +10,26 @@ public class BiologicalManager : MonoBehaviour {
 
     private int _fish_count;
 
-    private int _neonTetra_count;
-    //private int _tigerOscar_count;
+    private GameObject _water;
 
     //AssetBundle assetBundle;
 
 	void Start ()
     {
+        GameObject water_pot = GameObject.Find("Waterpot");
+        _water = water_pot.transform.FindChild("Water").gameObject;
         //assetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/resources");
-        _neonTetra_count = 0;
-        //_tigerOscar_count = 0;
     }
 
     public void FishCreate(string fish_name)
     {
         _fish_count++;
+        Vector3 instant_pos = new Vector3(Random.Range(_water.transform.localScale.x / -2.0f, _water.transform.localScale.x / 2.0f), Random.Range(_water.transform.localScale.y / -2.0f, _water.transform.localScale.y / 2.0f), 0);
+
         //GameObject _fish = assetBundle.LoadAsset<GameObject>(fish_name);
-        GameObject _fish = Resources.Load("Prefub/" + fish_name) as GameObject;
-        _fish = Instantiate(_fish, new Vector3(Random.Range(0, 0), Random.Range(0, 0), 0), Quaternion.Euler(new Vector3(0, 90, 0)));
-        _fish.name = fish_name + _fish_count;     
+        GameObject fish = Resources.Load("Prefub/" + fish_name) as GameObject;
+        fish = Instantiate(fish, instant_pos, Quaternion.Euler(new Vector3(0, 90, 0)));
+        fish.name = fish_name + _fish_count;     
     }
 
     public void FishDelete(string fish_name)
@@ -36,18 +37,18 @@ public class BiologicalManager : MonoBehaviour {
         if(_fish_count > 0)
         {
             int temp_count = _fish_count;
-            GameObject _fish = GameObject.Find(fish_name + _fish_count);
-            while (_fish != null)
+            GameObject fish = GameObject.Find(fish_name + temp_count);
+            while (fish == null)
             {
                 temp_count--;
-                _fish = GameObject.Find(fish_name + _fish_count);
+                fish = GameObject.Find(fish_name + temp_count);
                 if (temp_count < 0)
                 {
                     break;
                 }
             }
-            _fish_count--;
-            Destroy(_fish);
+            //fish_count--;
+            Destroy(fish);
         }
     }
 
