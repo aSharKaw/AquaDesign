@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HillDrag : MonoBehaviour {
+public class ObjectDrag : MonoBehaviour {
     [SerializeField]
     private Camera _camera;
 
@@ -27,12 +27,20 @@ public class HillDrag : MonoBehaviour {
         {
             return hit.point;
         }
-        return Vector3.zero;
+        return new Vector3(0, 0, -100);
     }
 
     private void OnMouseDrag()
     {
         this.transform.position = GetRay(/*_ray*/);
+    }
+
+    private void OnMouseUp()
+    {
+        if (gameObject.transform.position == new Vector3(0, 0, -100))
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
