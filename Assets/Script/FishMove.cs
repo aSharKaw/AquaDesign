@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //魚移動用スクリプト
-public class FishMove : MonoBehaviour {
+public class FishMove : MonoBehaviour
+{
 
     private Vector3 _target_position;
     private bool _swim_flug;
     private int _count;
     private int _wait_count;
+    [SerializeField]
     private float move_speed;
 
     private GameObject _child;
@@ -16,33 +18,70 @@ public class FishMove : MonoBehaviour {
 
     [SerializeField]
     private bool nonAnimation;
+    [SerializeField]
+    private bool ground;
 
-	void Start ()
+    private Vector3 SetPosition()
+    {
+        GameObject water_pot = GameObject.Find("WaterPot");
+        GameObject _water = water_pot.transform.FindChild("Water").gameObject;
+        if(!ground)
+        {
+            return new Vector3(Random.Range(_water.transform.localScale.x / -2, _water.transform.localScale.x / 2), Random.Range(_water.transform.localScale.y / -2, _water.transform.localScale.y / 2), Random.Range(_water.transform.localScale.z / -2, _water.transform.localScale.z / 2));
+        }
+        else
+        {
+            return new Vector3(Random.Range(_water.transform.localScale.x / -2, _water.transform.localScale.x / 2), (_water.transform.localScale.y / -2) + gameObject.transform.FindChild("body").gameObject.transform.localScale.y, Random.Range(_water.transform.localScale.z / -2, _water.transform.localScale.z / 2));
+        }
+    }
+
+    void Start()
     {
         _swim_flug = false;
         _count = 0;
         _wait_count = 0;
 
-        move_speed = 0.002f;
-
-        _target_position = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
+        _target_position = SetPosition();
         _child = transform.FindChild("body").gameObject;
-        
-        if(!nonAnimation)
+
+        //サイズが小さいため移動速度を調整
+        move_speed = move_speed / 1000;
+
+        if (!nonAnimation)
         {
             _anima = _child.GetComponent<Animator>();
         }
     }
-	
-	void Update ()
+
+    private void OnTriggerExit(Collider other)
     {
-        if(!nonAnimation)
+        if (other.name == "Water")
+        {
+
+            _target_position = SetPosition();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "FishTank" || other.name == "Floor")
+        {
+
+            //move_speed = -move_speed;
+            _target_position = SetPosition();
+        }
+    }
+
+    void Update()
+    {
+        if (!nonAnimation)
         {
 
             if (!_swim_flug)
             {
                 idle();
-                _target_position = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
+                _target_position = SetPosition();
+       
                 if (!idle())
                 {
                     _swim_flug = true;
@@ -57,13 +96,14 @@ public class FishMove : MonoBehaviour {
                 }
             }
         }
-        else if(nonAnimation)
+        else if (nonAnimation)
         {
 
             if (!_swim_flug)
             {
                 nonMotion_idle();
-                _target_position = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
+                _target_position = SetPosition();
+
                 if (!nonMotion_idle())
                 {
                     _swim_flug = true;
