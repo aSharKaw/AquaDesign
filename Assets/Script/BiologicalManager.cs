@@ -16,7 +16,7 @@ public class BiologicalManager : MonoBehaviour {
 
 	void Start ()
     {
-        GameObject water_pot = GameObject.Find("Waterpot");
+        GameObject water_pot = GameObject.Find("WaterPot");
         _water = water_pot.transform.FindChild("Water").gameObject;
         //assetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/resources");
     }
