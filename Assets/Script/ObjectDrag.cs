@@ -6,9 +6,8 @@ public class ObjectDrag : MonoBehaviour {
     [SerializeField]
     private Camera _camera;
 
-    //Ray _ray;
     [SerializeField]
-    private LayerMask mask;
+    private LayerMask _mask;
 
     void Start()
     {
@@ -23,7 +22,7 @@ public class ObjectDrag : MonoBehaviour {
         RaycastHit hit;
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, 1.0f, mask))
+        if (Physics.Raycast(ray, out hit, 1.0f, _mask))
         {
             return hit.point;
         }
@@ -34,6 +33,8 @@ public class ObjectDrag : MonoBehaviour {
     {
         this.transform.position = GetRay(/*_ray*/);
     }
+
+
 
     private void OnMouseUp()
     {
