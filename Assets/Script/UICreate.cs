@@ -14,26 +14,25 @@ public class UICreate : MonoBehaviour {
 
     private string[] ID =
     {
-        "テトラ",
-        "オスカー",
-        "グラミー",
-        "ポリプテルス",
-        "オトシンクルス",
+        "生体",
         "水草",
-        "苔石",
+        "小物"
+    };
+
+    private string[] TYPE =
+    {
+        "Fish",
+        "Leaf",
+        "Accessory"
     };
 
     private string[] FISH_NAME =
     {
         "NeonTetra",//ネオンテトラ
-
         "TigerOscar",//タイガーオスカー
-
         "HoneyDwarfGourami",//ハニードワーフグラミー
         "GoldenGourami",//ゴールデングラミー
-
         "Polypterus",//ポリプテルス
-
         "Otocinclus",//オトシンクルス
 
         "Amazonicus",//アマゾンソード
@@ -41,8 +40,14 @@ public class UICreate : MonoBehaviour {
         "Cabomba",//カボンバ
         "MicroSorum",//ミクロソリウム
 
-        "HighHill",//苔石(高)
-        "LowHill"//苔石(低)
+        "Wood1",//木1
+        "Wood2",//木2
+        "Moss_HighHill",//苔石(高)
+        "Moss_HighHalfHill",//苔石(高・半)
+        "Moss_HighQuarterHill",//苔石(高・半々)
+        "Moss_LowHill",//苔石(低)
+        "Moss_LowHalfHill",//苔石(低・半)
+        "Moss_LowQuarterHill"//苔石(低・半々)
     };
 
     void Awake()
@@ -53,7 +58,7 @@ public class UICreate : MonoBehaviour {
     }
 
     //UIの作成
-    void CreateUI(int id_number, int number, bool CreateDeleteButton)
+    void CreateUI(int id_number, int number, string Type)
     {
         GameObject FishUIHead = new GameObject("FishUI");
         FishUIHead.transform.parent = _canvas.transform;
@@ -62,41 +67,36 @@ public class UICreate : MonoBehaviour {
         {
             //必要オブジェクトの参照と生成
             GameObject fishUI;
-            Vector2 position = new Vector2(868, 380 - (i * 80));
+            Vector2 position = new Vector2(820 + ((i % 2) * 95), 370 - ((i / 2) * 95));
 
             fishUI = Instantiate(_fishUI, position, Quaternion.identity, FishUIHead.transform);
             fishUI.name = "fishUI";
             //ボタンイベントのみ想定の次の要素が参照されるバグ対応のため
             int id_check_number = id_number + i;
 
-            if (CreateDeleteButton)
-            {
-                //UI画像の参照
-                Sprite spritePlus = Resources.Load("Image/UI/" + FISH_NAME[id_check_number] + "Plus", typeof(Sprite)) as Sprite;
-                Sprite spriteMinus = Resources.Load("Image/UI/" + FISH_NAME[id_check_number] + "Minus", typeof(Sprite)) as Sprite;
-                Image createButtonImage = fishUI.transform.FindChild("CreateButton").GetComponent<Image>();
-                Image deleteButtonImage = fishUI.transform.FindChild("DeleteButton").GetComponent<Image>();
-                createButtonImage.sprite = spritePlus;
-                deleteButtonImage.sprite = spriteMinus;
+            //UI画像の参照
+            Image ViewImage = fishUI.transform.FindChild("View").GetComponent<Image>();
+            Sprite View = Resources.Load("Image/" + Type + "/" + FISH_NAME[id_check_number], typeof(Sprite)) as Sprite;
+            ViewImage.sprite = View;
 
+            if (Type == "Fish")
+            {
                 //OnClickイベントの作成
                 BiologicalManager _manager = GetComponent<BiologicalManager>();
                 Button createButton = fishUI.transform.FindChild("CreateButton").GetComponent<Button>();
-                createButton.onClick.AddListener(() => _manager.FishCreate(FISH_NAME[id_check_number]));
+                createButton.onClick.AddListener(() => _manager.ObjectCreate(Type, FISH_NAME[id_check_number]));
                 Button deleteButton = fishUI.transform.FindChild("DeleteButton").GetComponent<Button>();
-                deleteButton.onClick.AddListener(() => _manager.FishDelete(FISH_NAME[id_check_number]));
+                deleteButton.onClick.AddListener(() => _manager.ObjectDelete(FISH_NAME[id_check_number]));
             }
-            else
+            else if(Type == "Leaf" || Type == "Accessory")
             {
-                //UI画像の参照
-                Sprite spritePlus = Resources.Load("Image/Leaf/" + FISH_NAME[id_check_number], typeof(Sprite)) as Sprite;
-                Image createButtonImage = fishUI.transform.FindChild("CreateButton").GetComponent<Image>();
-                createButtonImage.sprite = spritePlus;
-
                 //OnClickイベントの作成
                 BiologicalManager _manager = GetComponent<BiologicalManager>();
                 Button createButton = fishUI.transform.FindChild("CreateButton").GetComponent<Button>();
-                createButton.onClick.AddListener(() => _manager.FishCreate(FISH_NAME[id_check_number]));
+                createButton.onClick.AddListener(() => _manager.ObjectCreate(Type, FISH_NAME[id_check_number]));
+                //DeleteButtonは使わないので削除
+                GameObject deleteButton = fishUI.transform.FindChild("DeleteButton").gameObject;
+                Destroy(deleteButton);
             }
         }
     }
@@ -126,25 +126,13 @@ public class UICreate : MonoBehaviour {
         switch(value)
         {
             case 0:
-                CreateUI(0, 1, true);
+                CreateUI(0, 6, TYPE[0]);
                 break;
             case 1:
-                CreateUI(1, 1, true);
+                CreateUI(6, 4, TYPE[1]);
                 break;
             case 2:
-                CreateUI(2, 2, true);
-                break;
-            case 3:
-                CreateUI(4, 1, true);
-                break;
-            case 4:
-                CreateUI(5, 1, true);
-                break;
-            case 5:
-                CreateUI(6, 4, false);
-                break;
-            case 6:
-                CreateUI(10, 2, false);
+                CreateUI(10, 8, TYPE[2]);
                 break;
         }
     }
