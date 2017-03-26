@@ -1,0 +1,15 @@
+手順
+
+1、「Plane」を２枚用意
+（Emptyの中に突っ込んだ方が楽）
+※以後P①とP②
+
+2、両方にスクリプトを張り付けてInspectorから変更
+　P①　：　「ScreenShot_1　上部」参照
+　P②　：　「ScreenShot_2　上部」参照
+
+3、P①、P②にMaterial追加、設定
+　P①　：　「ScreenShot_1　下部」参照
+　P②　：　「ScreenShot_2　下部」参照
+
+4、シーンをプレイして確認
