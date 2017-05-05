@@ -69,7 +69,9 @@ public class UICreate : MonoBehaviour {
 
 
         "Wood1",//木1
-        "Wood3",//木2
+        "Wood2",//木2
+        "Wood3",//木3
+        "Oukoseki",//黄虎石
 
 
         "Moss_HighHill",//苔石(高)
@@ -100,7 +102,7 @@ public class UICreate : MonoBehaviour {
             Vector2 position = new Vector2(820 + ((i % 2) * 95), 370 - ((i / 2) * 95));
 
             fishUI = Instantiate(_fishUI, position, Quaternion.identity, FishUIHead.transform);
-            fishUI.name = "fishUI";
+            fishUI.name = FISH_NAME[id_number + i];
             //ボタンイベントのみ想定の次の要素が参照されるバグ対応のため
             int id_check_number = id_number + i;
 
@@ -171,10 +173,10 @@ public class UICreate : MonoBehaviour {
                 CreateUI(26, 2, TYPE[1]);
                 break;
             case 5://小物
-                CreateUI(28, 2, TYPE[2]);
+                CreateUI(28, 4, TYPE[2]);
                 break;
             case 6://地形
-                CreateUI(30, 6, TYPE[3]);
+                CreateUI(32, 6, TYPE[3]);
                 break;
         }
     }
