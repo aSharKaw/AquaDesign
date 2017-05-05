@@ -14,34 +14,64 @@ public class UICreate : MonoBehaviour {
 
     private string[] ID =
     {
-        "生体",
-        "水草",
-        "小物"
+        "生体1",
+        "生体2",
+        "生体3",
+        "水草1",
+        "水草2",
+        "小物",
+        "地形"
     };
 
     private string[] TYPE =
     {
         "Fish",
         "Leaf",
-        "Accessory"
+        "Accessory",
+        "Terrain"
     };
 
     private string[] FISH_NAME =
     {
         "NeonTetra",//ネオンテトラ
+        "CardinalTetra",//カージナルテトラ
+        "EmperorTetra",//エンペラーテトラ
         "TigerOscar",//タイガーオスカー
         "HoneyDwarfGourami",//ハニードワーフグラミー
         "GoldenGourami",//ゴールデングラミー
         "Polypterus",//ポリプテルス
         "Otocinclus",//オトシンクルス
 
+        "SailfinCatfish",//セルフィンプレコ
+        "CorydorasJulii",//コリドラスジュリー
+        "CorydorasPanda",//コリドラスパンダ
+        "TigerPleco",//タイガープレコ
+        "JapaneseShrimp",//ヤマトヌマエビ
+        "RedBeeShrimp",//レッドビーシュリンプ
+        "BlackTetra",//ブラックテトラ
+        "RedPlaty",//レッドプラティ
+
+        "AfricanLampeye",//アフリカンランプアイ
+        "YellowSunsetPlaty",//イエローサンセットプラティ
+
+
         "Amazonicus",//アマゾンソード
         "Anubias",//アヌビスナナ
         "Cabomba",//カボンバ
         "MicroSorum",//ミクロソリウム
+        "LudwigiaPerennis",//レッドルブラ
+        "AmmaniaGracilis",//アマニアグラキリス
+        "Nesaea",//ネサエア
+        "ScrewVallisneria",//スクリューバリスネリア
+
+        "WaterBacopa",//ウォーターバコパ
+        "Rotala",//ロタラ
+
 
         "Wood1",//木1
-        "Wood2",//木2
+        "Wood3",//木2
+
+
         "Moss_HighHill",//苔石(高)
         "Moss_HighHalfHill",//苔石(高・半)
         "Moss_HighQuarterHill",//苔石(高・半々)
@@ -88,7 +118,7 @@ public class UICreate : MonoBehaviour {
                 Button deleteButton = fishUI.transform.FindChild("DeleteButton").GetComponent<Button>();
                 deleteButton.onClick.AddListener(() => _manager.ObjectDelete(FISH_NAME[id_check_number]));
             }
-            else if(Type == "Leaf" || Type == "Accessory")
+            else if(Type == "Leaf" || Type == "Accessory" || Type == "Terrain")
             {
                 //OnClickイベントの作成
                 BiologicalManager _manager = GetComponent<BiologicalManager>();
@@ -125,14 +155,26 @@ public class UICreate : MonoBehaviour {
         DeleteUI();
         switch(value)
         {
-            case 0:
-                CreateUI(0, 6, TYPE[0]);
+            case 0://生体
+                CreateUI(0, 8, TYPE[0]);
                 break;
             case 1:
-                CreateUI(6, 4, TYPE[1]);
+                CreateUI(8, 8, TYPE[0]);
                 break;
             case 2:
-                CreateUI(10, 8, TYPE[2]);
+                CreateUI(16, 2, TYPE[0]);
+                break;
+            case 3://水草
+                CreateUI(18, 8, TYPE[1]);
+                break;
+            case 4:
+                CreateUI(26, 2, TYPE[1]);
+                break;
+            case 5://小物
+                CreateUI(28, 2, TYPE[2]);
+                break;
+            case 6://地形
+                CreateUI(30, 6, TYPE[3]);
                 break;
         }
     }
