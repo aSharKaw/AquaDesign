@@ -72,6 +72,8 @@ public class UICreate : MonoBehaviour {
         "Wood2",//木2
         "Wood3",//木3
         "Oukoseki",//黄虎石
+        "Mokaseki",//木化石
+        "Sansuiseki",//山水石
 
 
         "Moss_HighHill",//苔石(高)
@@ -173,10 +175,10 @@ public class UICreate : MonoBehaviour {
                 CreateUI(26, 2, TYPE[1]);
                 break;
             case 5://小物
-                CreateUI(28, 4, TYPE[2]);
+                CreateUI(28, 6, TYPE[2]);
                 break;
             case 6://地形
-                CreateUI(32, 6, TYPE[3]);
+                CreateUI(34, 6, TYPE[3]);
                 break;
         }
     }
