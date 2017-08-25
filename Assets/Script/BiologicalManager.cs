@@ -1,46 +1,59 @@
-﻿using UnityEngine;
-using UnityEngine.Assertions;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-/// <summary>
-/// 水槽全体の管理をします。
-/// </summary>
-public class BiologicalManager
-{
-    /// <summary>
-    ///このBiologicalManagerが複数作られた時に、
-    ///エラーを表示するために使います。
-    /// </summary>
-    static private int _instantiated = 0;
+public class BiologicalManager : MonoBehaviour {
 
-    /// <summary>
-    /// 魚の管理を行っているインスタンスです。
-    /// </summary>
-    private FishManager _fishManager;
+    //テスト
+    //[System.NonSerialized]
+    private string _fish_name;
 
-    /// <summary>
-    /// 水のインスタンスを保持しています。
-    /// </summary>
+    private int _fish_count;
+
     private GameObject _water;
 
-    /// <summary>
-    /// 魚を管理しているマネージャーを取得します。
-    /// </summary>
-    /// <returns></returns>
-    public FishManager GetFishManager ( )
+    //AssetBundle assetBundle;
+
+	void Start ()
     {
-        return _fishManager;
+        GameObject water_pot = GameObject.Find("WaterPot");
+        _water = water_pot.transform.FindChild("Water").gameObject;
+        //assetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/resources");
     }
 
-    /// <summary>
-    /// シーン開始時に呼び出され、
-    /// 水インスタンスの取得と、魚の管理クラスを初期化しています。
-    /// </summary>
-    private void Start ( )
+    public void ObjectCreate(string Type, string fish_name)
     {
-        Assert.IsTrue( _instantiated == 0, "複数のマネージャが作成されています。" );
-        GameObject water_pot = GameObject.Find( "WaterPot" );
-        Assert.IsTrue( water_pot != null, "水槽オブジェクトがみつかりません。" );
-        _water = water_pot.transform.FindChild( "Water" ).gameObject;
-        _fishManager = new FishManager( _water );
+        _fish_count++;
+        Vector3 instant_pos = new Vector3(Random.Range(_water.transform.localScale.x / -2.0f, _water.transform.localScale.x / 2.0f), Random.Range(_water.transform.localScale.y / -2.0f, _water.transform.localScale.y / 2.0f), 0);
+
+        //GameObject _fish = assetBundle.LoadAsset<GameObject>(fish_name);
+        GameObject Object = Resources.Load("Prefub/" + Type + "/" + fish_name) as GameObject;
+        Object = Instantiate(Object, instant_pos, Quaternion.Euler(new Vector3(0, 90, 0)));
+        Object.name = fish_name + _fish_count;     
     }
+
+    public void ObjectDelete(string fish_name)
+    {
+        if(_fish_count > 0)
+        {
+            int temp_count = _fish_count;
+            GameObject Object = GameObject.Find(fish_name + temp_count);
+            while (Object == null)
+            {
+                temp_count--;
+                Object = GameObject.Find(fish_name + temp_count);
+                if (temp_count < 0)
+                {
+                    break;
+                }
+            }
+            //fish_count--;
+            Destroy(Object);
+        }
+    }
+
+    void Update ()
+    {
+        
+	}
 }
