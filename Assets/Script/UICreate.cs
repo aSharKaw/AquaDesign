@@ -42,7 +42,7 @@ public class UICreate : MonoBehaviour
         switch (value)
         {
             case 0://生体
-                CreateUI( 0, 8, EnumUtil<TYPE>.GetString(0) );
+                CreateUI( 0, 8, EnumUtil<TYPE>.GetString( 0 ) );
                 break;
 
             case 1:
@@ -91,7 +91,7 @@ public class UICreate : MonoBehaviour
             GameObject fishUI;
             int posx = 820 + ( ( i % 2 ) * 95 );
             int posy = 370 - ( ( i / 2 ) * 95 );
-            Vector2 position = new Vector2(posx , posy);
+            Vector2 position = new Vector2( posx, posy );
 
             fishUI = Instantiate( _fishUI, position, Quaternion.identity, FishUIHead.transform );
             fishUI.name = FISH_NAME[id_number + i];

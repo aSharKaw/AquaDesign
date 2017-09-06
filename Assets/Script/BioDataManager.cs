@@ -1,49 +1,49 @@
 ﻿using System.Collections;
 
+/// <summary>
+/// 生体情報のマネジメントを行う
+/// </summary>
 public class BioDataManager
 {
-
-    private void ArrayInit ( ArrayList fish, BioType type, string[] en, string[] jp )
-    {
-        for (int i = 0; i < en.Length; i++)
-        {
-            BioData data = new BioData()
-                .SetType( type )
-                .SetNameEn( en[i] )
-                .SetNameJp( jp[i] );
-            fish.Add( data );
-        }
-    }
-    /// <summary>
-    /// シングルトンのために封印
-    /// </summary>
-    private BioDataManager ( )
-    {
-        ArrayInit( _arr, BioType.FISH, FISH_NAME_EN, FISH_NAME_JP );
-        ArrayInit( _arr, BioType.LEAF, LEAF_NAME_EN, LEAF_NAME_JP );
-        ArrayInit( _arr, BioType.ACCESSARY, ACCESSARY_NAME_EN, ACCESSARY_NAME_JP );
-        ArrayInit( _arr, BioType.TERRAIN, TERRAIN_NAME_EN, TERRAIN_NAME_JP );
-
-    }
-
     /// <summary>
     /// シングルトンのインスタンス
     /// </summary>
     static private BioDataManager _self = new BioDataManager();
 
     /// <summary>
-    /// シングルトンの取得
-    /// </summary>
-    /// <returns>シングルトンのインスタンス</returns>
-    static public BioDataManager Instance ( ) { return _self; }
-
-    /// <summary>
     /// BioDataManagerのリスト
     /// </summary>
     private ArrayList _arr = new ArrayList();
 
+    /// <summary>
+    /// アクセサリーの名前の英語名
+    /// </summary>
+    private string[] ACCESSARY_NAME_EN =
+    {
+        "Wood1",//木1
+        "Wood2",//木2
+        "Wood3",//木3
+        "Oukoseki",//黄虎石
+        "Mokaseki",//木化石
+        "Sansuiseki",//山水石
+    };
 
+    /// <summary>
+    /// アクセサリーの名前の日本語名
+    /// </summary>
+    private string[] ACCESSARY_NAME_JP =
+    {
+        "木1",
+        "木2",
+        "木3",
+        "黄虎石",
+        "木化石",
+        "山水石",
+    };
 
+    /// <summary>
+    /// 魚の英語名
+    /// </summary>
     private string[] FISH_NAME_EN =
     {
         "NeonTetra",//ネオンテトラ
@@ -68,30 +68,36 @@ public class BioDataManager
         "YellowSunsetPlaty",//イエローサンセットプラティ
     };
 
+    /// <summary>
+    /// 魚の日本語名
+    /// </summary>
     private string[] FISH_NAME_JP =
     {
-        "ネオンテトラ",//
-        "カージナルテトラ",//
-        "エンペラーテトラ",//
-        "タイガーオスカー",//
-        "ハニードワーフグラミー",//
-        "ゴールデングラミー",//
-        "ポリプテルス",//
-        "オトシンクルス",//
+        "ネオンテトラ",
+        "カージナルテトラ",
+        "エンペラーテトラ",
+        "タイガーオスカー",
+        "ハニードワーフグラミー",
+        "ゴールデングラミー",
+        "ポリプテルス",
+        "オトシンクルス",
 
-        "セルフィンプレコ",//
-        "コリドラスジュリー",//
-        "コリドラスパンダ",//
-        "タイガープレコ",//
-        "ヤマトヌマエビ",//
-        "レッドビーシュリンプ",//
-        "ブラックテトラ",//
-        "レッドプラティ",//
+        "セルフィンプレコ",
+        "コリドラスジュリー",
+        "コリドラスパンダ",
+        "タイガープレコ",
+        "ヤマトヌマエビ",
+        "レッドビーシュリンプ",
+        "ブラックテトラ",
+        "レッドプラティ",
 
-        "アフリカンランプアイ",//
-        "イエローサンセットプラティ",//
+        "アフリカンランプアイ",
+        "イエローサンセットプラティ",
     };
 
+    /// <summary>
+    /// 植物の名前の英語名
+    /// </summary>
     private string[] LEAF_NAME_EN =
     {
         "Amazonicus",//アマゾンソード
@@ -106,39 +112,26 @@ public class BioDataManager
         "Rotala",//ロタラ
     };
 
+    /// <summary>
+    /// 植物の名前の日本語名
+    /// </summary>
     private string[] LEAF_NAME_JP =
     {
-        "アマゾンソード",//
-        "アヌビスナナ",//
-        "カボンバ",//
-        "ミクロソリウム",//
-        "レッドルブラ",//
-        "アマニアグラキリス",//
-        "ネサエア",//
-        "スクリューバリスネリア",//
-        "ウォーターバコパ",//
-        "ロタラ",//
-    };
-    private string[] ACCESSARY_NAME_EN =
-    {
-        "Wood1",//木1
-        "Wood2",//木2
-        "Wood3",//木3
-        "Oukoseki",//黄虎石
-        "Mokaseki",//木化石
-        "Sansuiseki",//山水石
+        "アマゾンソード",
+        "アヌビスナナ",
+        "カボンバ",
+        "ミクロソリウム",
+        "レッドルブラ",
+        "アマニアグラキリス",
+        "ネサエア",
+        "スクリューバリスネリア",
+        "ウォーターバコパ",
+        "ロタラ",
     };
 
-    private string[] ACCESSARY_NAME_JP =
-    {
-        "木1",//
-        "木2",//
-        "木3",//
-        "黄虎石",//
-        "木化石",//
-        "山水石",//
-    };
-
+    /// <summary>
+    /// 地形オブジェクトの英語名
+    /// </summary>
     private string[] TERRAIN_NAME_EN =
     {
         "Moss_HighHill",//苔石(高)
@@ -148,13 +141,53 @@ public class BioDataManager
         "Moss_LowHalfHill",//苔石(低・半)
         "Moss_LowQuarterHill"//苔石(低・半々)
     };
+
+    /// <summary>
+    /// 地形オブジェクトの日本語名
+    /// </summary>
     private string[] TERRAIN_NAME_JP =
     {
-        "苔石(高)",//
-        "苔石(高・半)",//
-        "苔石(高・半々)",//
-        "苔石(低)",//
-        "苔石(低・半)",//
-        "苔石(低・半々)"//
+        "苔石(高)",
+        "苔石(高・半)",
+        "苔石(高・半々)",
+        "苔石(低)",
+        "苔石(低・半)",
+        "苔石(低・半々)"
     };
+
+    /// <summary>
+    /// シングルトンのために封印
+    /// </summary>
+    private BioDataManager ( )
+    {
+        ArrayInit( _arr, BioType.FISH, FISH_NAME_EN, FISH_NAME_JP );
+        ArrayInit( _arr, BioType.LEAF, LEAF_NAME_EN, LEAF_NAME_JP );
+        ArrayInit( _arr, BioType.ACCESSARY, ACCESSARY_NAME_EN, ACCESSARY_NAME_JP );
+        ArrayInit( _arr, BioType.TERRAIN, TERRAIN_NAME_EN, TERRAIN_NAME_JP );
+    }
+
+    /// <summary>
+    /// シングルトンの取得
+    /// </summary>
+    /// <returns>シングルトンのインスタンス</returns>
+    static public BioDataManager Instance ( ) { return _self; }
+
+    /// <summary>
+    /// 配列の値を初期化する
+    /// </summary>
+    /// <param name="fish">データを追加したい配列</param>
+    /// <param name="type">設定する生体型</param>
+    /// <param name="en">設定する英語名</param>
+    /// <param name="jp">設定する日本語名</param>
+    private void ArrayInit ( ArrayList fish, BioType type, string[] en, string[] jp )
+    {
+        for (int i = 0; i < en.Length; i++)
+        {
+            BioData data = new BioData()
+                .SetType( type )
+                .SetNameEn( en[i] )
+                .SetNameJp( jp[i] );
+            fish.Add( data );
+        }
+    }
 }
