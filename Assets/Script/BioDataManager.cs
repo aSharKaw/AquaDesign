@@ -173,6 +173,15 @@ public class BioDataManager
     static public BioDataManager Instance ( ) { return _self; }
 
     /// <summary>
+    /// 配列のインスタンスを返す
+    /// </summary>
+    /// <returns>配列のインスタンス</returns>
+    public ArrayList GetArray ( )
+    {
+        return _arr;
+    }
+
+    /// <summary>
     /// 配列の値を初期化する
     /// </summary>
     /// <param name="fish">データを追加したい配列</param>
@@ -187,6 +196,16 @@ public class BioDataManager
                 .SetType( type )
                 .SetNameEn( en[i] )
                 .SetNameJp( jp[i] );
+            fish.Add( data );
+        }
+
+        // 空要素でページの空欄を埋めています
+        for (int i = 0; i < 8 - en.Length % 8; i++)
+        {
+            BioData data = new BioData()
+                .SetType( type )
+                .SetNameEn( "" )
+                .SetNameJp( "" );
             fish.Add( data );
         }
     }

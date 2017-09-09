@@ -38,12 +38,15 @@ public class BioData
     /// <returns>自分のインスタンスを返す</returns>
     public BioData SetNameEn ( string name ) { _nameEn = name; return this; }
 
+    public string GetNameEn ( ) { return _nameEn; }
+
     /// <summary>
     /// 日本語名を設定する関数
     /// </summary>
     /// <param name="name">設定する文字列</param>
     /// <returns>自分のインスタンスを返す</returns>
     public BioData SetNameJp ( string name ) { _nameJp = name; return this; }
+    public string GetNameJp ( ) { return _nameJp; }
 
     /// <summary>
     /// 生体型を設定する関数
@@ -51,4 +54,5 @@ public class BioData
     /// <param name="type">設定するs生体型</param>
     /// <returns>自分のインスタンスを返す</returns>
     public BioData SetType ( BioType type ) { _type = type; return this; }
+    public BioType GetBioType ( ) { return _type; }
 }
