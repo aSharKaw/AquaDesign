@@ -42,7 +42,9 @@ public class BiologicalManager
     /// <returns>管理しているFishManagerを返す。</returns>
     public FishManager GetFishManager ( )
     {
-        return _fishManager;
+        GameObject water_pot = GameObject.Find("WaterPot");
+        _water = water_pot.transform.FindChild("Water").gameObject;
+        //assetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/resources");
     }
 
     /// <summary>
