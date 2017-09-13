@@ -26,14 +26,6 @@ public class UICreate : MonoBehaviour
     /// </summary>
     private GameObject _fishUI;
 
-    private enum TYPE
-    {
-        Fish,
-        Leaf,
-        Accessory,
-        Terrain
-    };
-
     /// <summary>
     /// ボタンなどのUIを作成する。
     /// </summary>
