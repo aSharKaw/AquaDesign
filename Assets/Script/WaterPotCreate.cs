@@ -1,58 +1,83 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-public class WaterPotCreate : MonoBehaviour {
+/// <summary>
+/// 指定された形状の水槽オブジェクトを作成する。
+/// このクラスについては、
+/// ボタンからの操作でプレファブを指定して渡す方法の方が使いやすいはず。
+/// </summary>
+public class WaterPotCreate : MonoBehaviour
+{
 
+    /// <summary>
+    /// 水槽のプレファブを指定しておく
+    /// </summary>
     [SerializeField]
-    GameObject _waterpot60;
-    [SerializeField]
-    GameObject _waterpotcube;
-    [SerializeField]
-    GameObject _waterpotsphere;
-    [SerializeField]
-    GameObject _waterpothalfsphere;
+    private GameObject _waterpot60;
 
-    void Start () {
+    /// <summary>
+    /// 水槽のプレファブを指定しておく
+    /// </summary>
+    [SerializeField]
+    private GameObject _waterpotcube;
+
+    /// <summary>
+    /// 水槽のプレファブを指定しておく
+    /// </summary>
+    [SerializeField]
+    private GameObject _waterpothalfsphere;
+
+    /// <summary>
+    /// 水槽のプレファブを指定しておく
+    /// </summary>
+    [SerializeField]
+    private GameObject _waterpotsphere;
+
+    /// <summary>
+    /// 今までの水槽を破棄して、新しい水槽を表示する。
+    /// </summary>
+    private void DeleteOldPot()
+    {
+        GameObject waterpot = GameObject.Find( "WaterPot" );
+        Destroy( waterpot );
     }
 
-	void Update () {
-	}
-
-    public void CreatePot60()
+    /// <summary>
+    /// 水槽をPot60に変更する
+    /// </summary>
+    public void CreatePot60 ( )
     {
-        GameObject waterpot = GameObject.Find("WaterPot");
-        Destroy(waterpot);
-
-        GameObject createPot = Instantiate(_waterpot60);
+        DeleteOldPot();
+        GameObject createPot = Instantiate( _waterpot60 );
         createPot.name = "WaterPot";
     }
 
-    public void CreatePotCube()
+    /// <summary>
+    /// 水槽をCubeに変更する
+    /// </summary>
+    public void CreatePotCube ( )
     {
-        GameObject waterpot = GameObject.Find("WaterPot");
-        Destroy(waterpot);
-
-        GameObject createPot = Instantiate(_waterpotcube);
+        DeleteOldPot();
+        GameObject createPot = Instantiate( _waterpotcube );
         createPot.name = "WaterPot";
     }
 
-    public void CreatePotSphere()
+    /// <summary>
+    /// 水槽を半球体に変更する
+    /// </summary>
+    public void CreatePotHalfSphere ( )
     {
-        GameObject waterpot = GameObject.Find("WaterPot");
-        Destroy(waterpot);
-
-        GameObject createPot = Instantiate(_waterpotsphere);
+        DeleteOldPot();
+        GameObject createPot = Instantiate( _waterpothalfsphere );
         createPot.name = "WaterPot";
     }
 
-    public void CreatePotHalfSphere()
+    /// <summary>
+    /// 水槽を球体に変更する
+    /// </summary>
+    public void CreatePotSphere ( )
     {
-        GameObject waterpot = GameObject.Find("WaterPot");
-        Destroy(waterpot);
-
-        GameObject createPot = Instantiate(_waterpothalfsphere);
+        DeleteOldPot();
+        GameObject createPot = Instantiate( _waterpotsphere );
         createPot.name = "WaterPot";
     }
 }
