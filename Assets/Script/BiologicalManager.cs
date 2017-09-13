@@ -13,6 +13,11 @@ public class BiologicalManager
     static private int _instantiated = 0;
 
     /// <summary>
+    /// 初期化されたシングルトンインスタンス
+    /// </summary>
+    private static BiologicalManager _self = new BiologicalManager();
+
+    /// <summary>
     /// 魚の管理を行っているインスタンスです。
     /// </summary>
     private FishManager _fishManager;
@@ -22,25 +27,27 @@ public class BiologicalManager
     /// </summary>
     private GameObject _water;
 
+    /// 水インスタンスの取得と、魚の管理クラスを初期化しています。
+    private BiologicalManager ( )
+    {
+        GameObject water_pot = GameObject.Find( "WaterPot" );
+        Assert.IsNotNull( water_pot );
+        _water = water_pot.transform.FindChild( "Water" ).gameObject;
+        _fishManager = new FishManager( _water );
+    }
+
     /// <summary>
     /// 魚を管理しているマネージャーを取得します。
     /// </summary>
-    /// <returns></returns>
+    /// <returns>管理しているFishManagerを返す。</returns>
     public FishManager GetFishManager ( )
     {
         return _fishManager;
     }
 
     /// <summary>
-    /// シーン開始時に呼び出され、
-    /// 水インスタンスの取得と、魚の管理クラスを初期化しています。
+    /// シングルトンのインスタンスを返す。
     /// </summary>
-    private void Start ( )
-    {
-        Assert.IsTrue( _instantiated == 0, "複数のマネージャが作成されています。" );
-        GameObject water_pot = GameObject.Find( "WaterPot" );
-        Assert.IsTrue( water_pot != null, "水槽オブジェクトがみつかりません。" );
-        _water = water_pot.transform.FindChild( "Water" ).gameObject;
-        _fishManager = new FishManager( _water );
-    }
+    /// <returns>シングルトンのインスタンス。</returns>
+    private static BiologicalManager Instance ( ) { return _self; }
 }

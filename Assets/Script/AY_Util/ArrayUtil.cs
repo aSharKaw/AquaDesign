@@ -26,5 +26,28 @@ namespace AY_Util
                 ret[i] = arr[i + first];
             return ret;
         }
+
+        public delegate void Func ( T t );
+        public delegate void Func2 ( int index, T t );
+
+        /// <summary>
+        /// 全ての要素にある処理を行う。
+        /// </summary>
+        /// <param name="arr">対象の配列</param>
+        /// <param name="f">処理の関数。</param>
+        public static void ForEach ( T[] arr, Func f )
+        {
+            foreach (T t in arr) f( t );
+        }
+
+        /// <summary>
+        /// 全ての要素にある処理を行う。
+        /// </summary>
+        /// <param name="arr">対象の配列</param>
+        /// <param name="f">処理の関数。</param>
+        public static void ForEach ( T[] arr, Func2 f )
+        {
+            for (int i = 0; i < arr.Length; i++) f( i, arr[i] );
+        }
     }
 }
