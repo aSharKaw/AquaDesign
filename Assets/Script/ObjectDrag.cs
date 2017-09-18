@@ -1,43 +1,57 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// このクラスはまだ機能していないようにみえます。
+/// </summary>
 public class ObjectDrag : MonoBehaviour
 {
+    /// <summary>
+    /// カメラインスタンスをInspectorから指定するための変数。
+    /// </summary>
     [SerializeField]
     private Camera _camera;
 
+    /// <summary>
+    /// Rayを飛ばすときのマスク
+    /// </summary>
     [SerializeField]
     private LayerMask _mask;
 
+    /// <summary>
+    /// レイが命中しなかった場合の定数。
+    /// </summary>
+    private readonly Vector3 DROP_OUT = new Vector3( 0, 0, -100 );
+
+    /// <summary>
+    /// Rayの当たった地点を返す
+    /// </summary>
+    /// <returns></returns>
     private Vector3 GetRayHitPoint ( )
     {
         RaycastHit hit;
         Ray ray = _camera.ScreenPointToRay( Input.mousePosition );
 
-        if (Physics.Raycast( ray, out hit, 1.0f, _mask ))
-        {
-            return hit.point;
-        }
-        return new Vector3( 0, 0, -100 );
+        bool isHit = Physics.Raycast( ray, out hit, 1.0f, _mask );
+        if (isHit == false) return DROP_OUT;
+        return hit.point;
     }
 
-    private void OnMouseDrag ( )
-    {
-        this.transform.position = GetRayHitPoint(/*_ray*/);
-    }
-
+    /// <summary>
+    /// マウスのボタンをあげたときの処理。
+    /// </summary>
     private void OnMouseUp ( )
     {
-        if (gameObject.transform.position == new Vector3( 0, 0, -100 ))
-        {
-            Destroy( gameObject );
-        }
+        bool isDropOut = gameObject.transform.position == DROP_OUT;
+        if (isDropOut == false) return;
+        Destroy( gameObject );
     }
 
+    /// <summary>
+    /// /カメラが指定されていなければ、メインカメラを取得する。
+    /// </summary>
     private void Start ( )
     {
-        if (this._camera == null)
-        {
-            _camera = Camera.main;
-        }
+        if (this._camera != null) return;
+        _camera = Camera.main;
     }
 }
