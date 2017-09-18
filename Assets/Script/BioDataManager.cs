@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using AY_Util;
 
 /// <summary>
 /// 生体情報のマネジメントを行う
@@ -199,14 +200,9 @@ public class BioDataManager
             fish.Add( data );
         }
 
-        // 空要素でページの空欄を埋めています
-        for (int i = 0; i < 8 - en.Length % 8; i++)
-        {
-            BioData data = new BioData()
-                .SetType( type )
-                .SetNameEn( "" )
-                .SetNameJp( "" );
-            fish.Add( data );
-        }
+        BioData blank = new BioData().SetType( type );
+        int pageData = 8;
+        int fillSize = pageData - ( en.Length % pageData );
+        ArrayListUtil<BioData>.Fill( fish, blank, fillSize );
     }
 }

@@ -1,59 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
 
-public class BiologicalManager : MonoBehaviour {
+/// <summary>
+/// 水槽全体の管理をします。
+/// </summary>
+public class BiologicalManager
+{
+    /// <summary>
+    ///このBiologicalManagerが複数作られた時に、
+    ///エラーを表示するために使います。
+    /// </summary>
+    static private int _instantiated = 0;
 
-    //テスト
-    //[System.NonSerialized]
-    private string _fish_name;
+    /// <summary>
+    /// 初期化されたシングルトンインスタンス
+    /// </summary>
+    private static BiologicalManager _self = new BiologicalManager();
 
-    private int _fish_count;
+    /// <summary>
+    /// 魚の管理を行っているインスタンスです。
+    /// </summary>
+    private FishManager _fishManager;
 
+    /// <summary>
+    /// 水のインスタンスを保持しています。
+    /// </summary>
     private GameObject _water;
 
-    //AssetBundle assetBundle;
+    /// 水インスタンスの取得と、魚の管理クラスを初期化しています。
+    private BiologicalManager ( )
+    {
+        GameObject water_pot = GameObject.Find( "WaterPot" );
+        Assert.IsNotNull( water_pot );
+        _water = water_pot.transform.FindChild( "Water" ).gameObject;
+        _fishManager = new FishManager( _water );
+    }
 
-	void Start ()
+    /// <summary>
+    /// 魚を管理しているマネージャーを取得します。
+    /// </summary>
+    /// <returns>管理しているFishManagerを返す。</returns>
+    public FishManager GetFishManager ( )
     {
         GameObject water_pot = GameObject.Find("WaterPot");
         _water = water_pot.transform.FindChild("Water").gameObject;
         //assetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/resources");
     }
 
-    public void ObjectCreate(string Type, string fish_name)
-    {
-        _fish_count++;
-        Vector3 instant_pos = new Vector3(Random.Range(_water.transform.localScale.x / -2.0f, _water.transform.localScale.x / 2.0f), Random.Range(_water.transform.localScale.y / -2.0f, _water.transform.localScale.y / 2.0f), 0);
-
-        //GameObject _fish = assetBundle.LoadAsset<GameObject>(fish_name);
-        GameObject Object = Resources.Load("Prefub/" + Type + "/" + fish_name) as GameObject;
-        Object = Instantiate(Object, instant_pos, Quaternion.Euler(new Vector3(0, 90, 0)));
-        Object.name = fish_name + _fish_count;     
-    }
-
-    public void ObjectDelete(string fish_name)
-    {
-        if(_fish_count > 0)
-        {
-            int temp_count = _fish_count;
-            GameObject Object = GameObject.Find(fish_name + temp_count);
-            while (Object == null)
-            {
-                temp_count--;
-                Object = GameObject.Find(fish_name + temp_count);
-                if (temp_count < 0)
-                {
-                    break;
-                }
-            }
-            //fish_count--;
-            Destroy(Object);
-        }
-    }
-
-    void Update ()
-    {
-        
-	}
+    /// <summary>
+    /// シングルトンのインスタンスを返す。
+    /// </summary>
+    /// <returns>シングルトンのインスタンス。</returns>
+    private static BiologicalManager Instance ( ) { return _self; }
 }

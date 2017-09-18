@@ -1,49 +1,65 @@
 ﻿using AY_Util;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class UICreate : MonoBehaviour
 {
-    private readonly int _PAGE_SUBJECT = 8;
+    /// <summary>
+    /// ページ要素の総数
+    /// </summary>
+    private readonly int _PAGE_ELEMENT = 8;
+
+    /// <summary>
+    /// キャンバス要素
+    /// </summary>
     private GameObject _canvas;
 
-    [SerializeField]
+    /// <summary>
+    /// ドロップダウンUI
+    /// </summary>
     private Dropdown _dropdown;
 
+    /// <summary>
+    /// UI単位のプレファブ
+    /// </summary>
     private GameObject _fishUI;
 
-    private BiologicalManager _manager;
-
-    private enum TYPE
-    {
-        Fish,
-        Leaf,
-        Accessory,
-        Terrain
-    };
-
+    /// <summary>
+    /// ボタンなどのUIを作成する。
+    /// </summary>
+    /// <param name="arr"></param>
     public void CreateUI ( ArrayList arr )
     {
         GameObject FishUIHead = new GameObject( "FishUI" );
         FishUIHead.transform.parent = _canvas.transform;
 
-        for (int i = 0; i < _PAGE_SUBJECT; i++)
+        for (int i = 0; i < _PAGE_ELEMENT; i++)
         {
             BioData data = ( BioData )arr[i];
-            CreateUITip( i, data, FishUIHead );
+            if (data.GetNameEn().Length < 1) continue;
+            CreateUITip( FishUIHead, i, data );
         }
     }
 
+    /// <summary>
+    /// 指定されたページに表示されるUI要素をフィルタリングして返す。
+    /// </summary>
+    /// <param name="page">表示する予定のページインデックス</param>
+    /// <returns>表示される要素の配列</returns>
     public ArrayList GetPageElement ( int page )
     {
         DeleteUI();
         ArrayList arr = BioDataManager.Instance().GetArray();
-        int pageStart = page * _PAGE_SUBJECT;
-        ArrayList pageData = ArrayListUtil<BioData>.Slice( arr, pageStart, pageStart + _PAGE_SUBJECT );
+        int pageStart = page * _PAGE_ELEMENT;
+        ArrayList pageData = ArrayListUtil<BioData>.Slice( arr, pageStart, pageStart + _PAGE_ELEMENT );
         return pageData;
     }
 
+    /// <summary>
+    /// シーン起動時にメンバー関数の初期化を行う。
+    /// </summary>
     private void Awake ( )
     {
         _fishUI = Resources.Load( "Prefub/FishUI" ) as GameObject;
@@ -51,57 +67,87 @@ public class UICreate : MonoBehaviour
         _dropdown = _canvas.transform.FindChild( "Dropdown" ).gameObject.GetComponent<Dropdown>();
     }
 
-    private void ClickEvent ( BioData data, GameObject fishUI )
+    /// <summary>
+    /// 指定したオブジェクトから、子要素にある、指定した名前のボタンコンポネントを取得して返す。
+    /// </summary>
+    /// <param name="obj">ボタンを子にもつオブジェクト</param>
+    /// <param name="name">取得するボタンオブジェクトの名前</param>
+    /// <returns>指定された名前のボタンコンポネント</returns>
+    private Button GetButtonComponent ( GameObject obj, string name )
     {
-        //OnClickイベントの作成
-        BiologicalManager _manager = GetComponent<BiologicalManager>();
-        Button createButton = fishUI.transform.FindChild( "CreateButton" ).GetComponent<Button>();
-        FishManager fish = _manager.GetFishManager();
-        createButton.onClick.AddListener( ( ) =>
-        fish.FishCreate( data.GetBioType().ToString(), data.GetNameJp() ) );
+        Button btn = obj.transform.FindChild( name ).GetComponent<Button>();
+        Assert.IsNotNull( btn );
+        return btn;
+    }
 
-        if (BioType.FISH == data.GetBioType())
+    /// <summary>
+    /// OnClickイベントの作成
+    /// </summary>
+    /// <param name="fishUI">UI単位をまとめるオブジェクト。</param>
+    /// <param name="data">作成する魚のデータ</param>
+    private void ClickEvent ( GameObject fishUI, BioData data )
+    {
+        BiologicalManager _manager = GetComponent<BiologicalManager>();
+        FishManager fish = _manager.GetFishManager();
+        Button createButton = GetButtonComponent( fishUI, "CreateButton" );
+        createButton.onClick.AddListener( ( ) =>
         {
-            //OnClickイベントの作成
-            Button deleteButton = fishUI.transform.FindChild( "DeleteButton" ).GetComponent<Button>();
+            fish.FishCreate( data.GetBioType().ToString(), data.GetNameJp() );
+        } );
+
+        Button deleteButton = GetButtonComponent( fishUI, "DeleteButton" );
+        if (BioType.FISH != data.GetBioType())
+        {
             deleteButton.onClick.AddListener( ( ) => fish.ObjectDelete( data.GetNameJp() ) );
             return;
         }
-        //DeleteButtonは使わないので削除
-        GameObject dalete = fishUI.transform.FindChild( "DeleteButton" ).gameObject;
-        Destroy( dalete );
+        // 魚以外はDeleteButtonは使わないので削除
+        Destroy( deleteButton.gameObject );
     }
 
-    private void CreateUITip ( int i, BioData data, GameObject FishUIHead )
+    /// <summary>
+    /// UIオブジェクトの生成
+    /// </summary>
+    /// <param name="FishUIHead">生成されたオブジェクトの親要素</param>
+    /// <param name="i">生成位置を調整するインデックス</param>
+    /// <param name="data">生成するオブジェクトのデータが入ったインスタンス</param>
+    private void CreateUITip ( GameObject FishUIHead, int i, BioData data )
     {
-        //必要オブジェクトの参照と生成
         GameObject fishUI;
         int posx = 820 + ( ( i % 2 ) * 95 );
         int posy = 370 - ( ( i / 2 ) * 95 );
         Vector2 position = new Vector2( posx, posy );
 
-        fishUI = Instantiate( _fishUI, position, Quaternion.identity, FishUIHead.transform );
+        fishUI = Instantiate( _fishUI, position, Quaternion.identity );
+        fishUI.transform.parent = FishUIHead.transform;
         fishUI.name = data.GetNameJp();
 
         PictureRef( fishUI, data );
-        ClickEvent( data, fishUI );
+        ClickEvent( fishUI, data );
     }
 
+    /// <summary>
+    /// FishUIがすでに生成済みであれば削除する。
+    /// </summary>
     private void DeleteUI ( )
     {
-        //生成済みのものがあれば削除
         GameObject alreadyUI = GameObject.Find( "FishUI" ).gameObject;
         if (alreadyUI == null) return;
         Destroy( alreadyUI );
     }
 
+    /// <summary>
+    /// 参照するUI画像をリソースから読み込んで表示
+    /// </summary>
+    /// <param name="fishUI">画像を設定するゲームオブジェクトの親オブジェクト</param>
+    /// <param name="data">設定するデータ</param>
     private void PictureRef ( GameObject fishUI, BioData data )
     {
-        //UI画像の参照
-        Image ViewImage = fishUI.transform.FindChild( "View" ).GetComponent<Image>();
-        string resourceString = "Image/" + data.GetBioType() + "/" + data.GetNameJp();
+        string type = StringUtil.ToTitle( data.GetBioType().ToString() );
+        Image image = fishUI.transform.FindChild( "View" ).GetComponent<Image>();
+        string resourceString = "Image/" + type + "/" + data.GetNameEn();
         Sprite View = Resources.Load( resourceString, typeof( Sprite ) ) as Sprite;
-        ViewImage.sprite = View;
+        image.sprite = View;
     }
 
     /// <summary>
@@ -110,18 +156,21 @@ public class UICreate : MonoBehaviour
     private void SetDropDown ( )
     {
         // 後でBioTypeから生成するようにする。
-        string[] ids ={"生体1","生体2","生体3","水草1","水草2","小物","地形"};
-        foreach (string id in ids)
+        string[] ids = { "生体1", "生体2", "生体3", "水草1", "水草2", "小物", "地形" };
+        ArrayUtil<string>.ForEach( ids, id =>
         {
             Dropdown.OptionData data = new Dropdown.OptionData
             {
                 text = id
             };
             _dropdown.options.Add( data );
-        }
+        } );
         _dropdown.RefreshShownValue();
     }
 
+    /// <summary>
+    /// ドロップダウンを初期化する
+    /// </summary>
     private void Start ( )
     {
         SetDropDown();

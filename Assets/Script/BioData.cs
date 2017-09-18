@@ -14,12 +14,12 @@ public class BioData
     /// <summary>
     /// 生体の英語名
     /// </summary>
-    private string _nameEn;
+    private string _nameEn = "";
 
     /// <summary>
     /// 生体の日本語名
     /// </summary>
-    private string _nameJp;
+    private string _nameJp = "";
 
     /// <summary>
     /// このデータの生体型
