@@ -1,47 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ObjectDrag : MonoBehaviour {
+/// <summary>
+/// このクラスはまだ機能していないようにみえます。
+/// </summary>
+public class ObjectDrag : MonoBehaviour
+{
+    /// <summary>
+    /// カメラインスタンスをInspectorから指定するための変数。
+    /// </summary>
     [SerializeField]
     private Camera _camera;
 
+    /// <summary>
+    /// Rayを飛ばすときのマスク
+    /// </summary>
     [SerializeField]
     private LayerMask _mask;
 
-    void Start()
-    {
-        if (this._camera == null)
-        {
-            _camera = Camera.main;
-        }
-    }
+    /// <summary>
+    /// レイが命中しなかった場合の定数。
+    /// </summary>
+    private readonly Vector3 DROP_OUT = new Vector3( 0, 0, -100 );
 
-    Vector3 GetRay(/*Ray ray*/)
+    /// <summary>
+    /// Rayの当たった地点を返す
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 GetRayHitPoint ( )
     {
         RaycastHit hit;
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay( Input.mousePosition );
 
-        if (Physics.Raycast(ray, out hit, 1.0f, _mask))
-        {
-            return hit.point;
-        }
-        return new Vector3(0, 0, -100);
+        bool isHit = Physics.Raycast( ray, out hit, 1.0f, _mask );
+        if (isHit == false) return DROP_OUT;
+        return hit.point;
     }
 
-    private void OnMouseDrag()
+    /// <summary>
+    /// マウスのボタンをあげたときの処理。
+    /// </summary>
+    private void OnMouseUp ( )
     {
-        this.transform.position = GetRay(/*_ray*/);
+        bool isDropOut = gameObject.transform.position == DROP_OUT;
+        if (isDropOut == false) return;
+        Destroy( gameObject );
     }
 
-
-
-    private void OnMouseUp()
+    /// <summary>
+    /// /カメラが指定されていなければ、メインカメラを取得する。
+    /// </summary>
+    private void Start ( )
     {
-        if (gameObject.transform.position == new Vector3(0, 0, -100))
-        {
-            Destroy(gameObject);
-        }
+        if (this._camera != null) return;
+        _camera = Camera.main;
     }
-
 }
