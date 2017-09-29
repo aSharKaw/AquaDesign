@@ -9,7 +9,7 @@ public class EF_UvScroll_Color : MonoBehaviour {
     /// <summary>
     /// 作成者：阿部慶照（ねこかつ）
     /// 作成日：2017/02/24
-    /// 
+    ///
     /// 使用用途
     /// ・UVオートスクロール対応
     /// ・UVタイリング対応
@@ -51,7 +51,7 @@ public class EF_UvScroll_Color : MonoBehaviour {
     float offsetX = 0;
     float offsetY = 0;
 
-    
+
 
     //起動時
     void Start()
@@ -79,62 +79,62 @@ public class EF_UvScroll_Color : MonoBehaviour {
     //50FPS固定アップデート
     void FixedUpdate()
     {
-        
 
-        //UVスクロール
-        if (AutoUvScroll == true)
-        {
-            //UVオートスクロール
-            _AutoScrollSpeed.x = Time.fixedDeltaTime * AutoScrollSpeed.x;
-            _AutoScrollSpeed.y = Time.fixedDeltaTime * AutoScrollSpeed.y;
 
-            offsetX += _AutoScrollSpeed.x;
-            offsetY += _AutoScrollSpeed.y;
+        ////UVスクロール
+        //if (AutoUvScroll == true)
+        //{
+        //    //UVオートスクロール
+        //    _AutoScrollSpeed.x = Time.fixedDeltaTime * AutoScrollSpeed.x;
+        //    _AutoScrollSpeed.y = Time.fixedDeltaTime * AutoScrollSpeed.y;
 
-            
-        }
-        else
-        {
-            //オフセットアニメーション
-             offsetX = OffSet.x;
-             offsetY = OffSet.y;
+        //    offsetX += _AutoScrollSpeed.x;
+        //    offsetY += _AutoScrollSpeed.y;
 
-        }
 
-        //オフセット設定
-        rend.material.SetTextureOffset("_MainTex", new Vector2(offsetX, offsetY));
+        //}
+        //else
+        //{
+        //    //オフセットアニメーション
+        //    offsetX = OffSet.x;
+        //    offsetY = OffSet.y;
 
-        //タイリング設定
-        rend.material.SetTextureScale("_MainTex", new Vector2(Tiling.x, Tiling.y));
+        //}
 
-        //色変更設定
-        rend.material.SetColor("_TintColor", color);
-        rend.material.SetColor("_Color", color);
-        rend.material.SetColor("_EmissionColor", EmissionColor);
+        ////オフセット設定
+        //rend.material.SetTextureOffset( "_MainTex", new Vector2( offsetX, offsetY ) );
 
-        //歪み量設定
-        rend.material.SetFloat("_HeatTime", HeatTime);
-        rend.material.SetFloat("_HeatForce", HeatForce);
+        ////タイリング設定
+        //rend.material.SetTextureScale( "_MainTex", new Vector2( Tiling.x, Tiling.y ) );
+
+        ////色変更設定
+        //rend.material.SetColor( "_TintColor", color );
+        //rend.material.SetColor( "_Color", color );
+        //rend.material.SetColor( "_EmissionColor", EmissionColor );
+
+        ////歪み量設定
+        //rend.material.SetFloat( "_HeatTime", HeatTime );
+        //rend.material.SetFloat( "_HeatForce", HeatForce );
 
     }
 
 
     void OnValidate()
     {
-        //オフセット設定
-        rend.sharedMaterial.SetTextureOffset("_MainTex", new Vector2(offsetX, offsetY));
+        ////オフセット設定
+        //rend.sharedMaterial.SetTextureOffset("_MainTex", new Vector2(offsetX, offsetY));
 
-        //タイリング設定
-        rend.sharedMaterial.SetTextureScale("_MainTex", new Vector2(Tiling.x, Tiling.y));
+        ////タイリング設定
+        //rend.sharedMaterial.SetTextureScale("_MainTex", new Vector2(Tiling.x, Tiling.y));
 
-        //色変更設定
-        rend.sharedMaterial.SetColor("_TintColor", color);
-        rend.sharedMaterial.SetColor("_Color", color);
-        rend.sharedMaterial.SetColor("_EmissionColor", EmissionColor);
+        ////色変更設定
+        //rend.sharedMaterial.SetColor("_TintColor", color);
+        //rend.sharedMaterial.SetColor("_Color", color);
+        //rend.sharedMaterial.SetColor("_EmissionColor", EmissionColor);
 
-        //歪み量設定
-        rend.sharedMaterial.SetFloat("_HeatTime", HeatTime);
-        rend.sharedMaterial.SetFloat("_HeatForce", HeatForce);
+        ////歪み量設定
+        //rend.sharedMaterial.SetFloat("_HeatTime", HeatTime);
+        //rend.sharedMaterial.SetFloat("_HeatForce", HeatForce);
     }
 
 
