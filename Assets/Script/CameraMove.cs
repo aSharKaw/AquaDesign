@@ -55,7 +55,7 @@ public class CameraMove : MonoBehaviour
     }
 
     /// <summary>
-    ///
+    /// カメラ移動の実行。
     /// </summary>
     private void Update ( )
     {
