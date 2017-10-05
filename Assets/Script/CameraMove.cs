@@ -1,86 +1,68 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-//カメラ移動用スクリプト
+/// <summary>
+/// カメラ移動用スクリプト
+/// </summary>
 public class CameraMove : MonoBehaviour
 {
-    private Vector3 DEFAULT_POS = new Vector3(0, 0, 0.7f);
+    /// <summary>
+    /// 移動速度
+    /// </summary>
+    private float _moveSpeed;
 
-    //移動速度
-    private float _move_speed;
+    /// <summary>
+    /// カメラのデフォルトポジション
+    /// </summary>
+    private Vector3 DEFAULT_POS = new Vector3( 0, 0, 0.7f );
 
-    //ボタン長押し判定
-    private bool up_button;
-    private bool down_button;
-    private bool left_button;
-    private bool right_button;
+    /// <summary>
+    /// カメラに対する移動処理の内容を一時的に保持する。
+    /// newコストを避けるためにメンバー関数として保持。
+    /// </summary>
+    private Vector2 _delta = new Vector2();
 
-    void Start()
-    {
-        _move_speed = 0.5f * Time.deltaTime;
-    }
+    /// <summary>
+    /// カメラの変化量を計算するために使う。
+    /// newコストを避けるためにメンバー関数として保持。
+    /// </summary>
+    private Vector2 _move = new Vector2();
 
-    public void UpButtonPush()
+    /// <summary>
+    /// ボタン入力による処理を_deltaで受け止めるための窓口。
+    /// </summary>
+    /// <param name="x">X上の移動量。</param>
+    public void MoveX(int x)
     {
-        up_button = true;
-    }
-    public void UpButtonRelease()
-    {
-        up_button = false;
-    }
-
-    public void DownButtonPush()
-    {
-        down_button = true;
-    }
-    public void DownButtonRelease()
-    {
-        down_button = false;
+        _delta.x += x;
     }
 
-    public void LeftButtonPush()
+    /// <summary>
+    /// ボタン入力による処理を_deltaで受け止めるための窓口。
+    /// </summary>
+    /// <param name="y">Y上の移動量</param>
+    public void MoveY ( int y )
     {
-        left_button = true;
-    }
-    public void LeftButtonRelease()
-    {
-        left_button = false;
-    }
-
-    public void RightButtonPush()
-    {
-        right_button = true;
-    }
-    public void RightButtonRelease()
-    {
-        right_button = false;
+        _delta.y += y;
     }
 
-    public void ResetButton()
+    /// <summary>
+    /// ボタン入力でカメラ位置を初期位置へ戻すための窓口。
+    /// </summary>
+    public void ResetButton ( )
     {
         gameObject.transform.position = DEFAULT_POS;
-        gameObject.transform.LookAt(Vector3.zero);
+        gameObject.transform.LookAt( Vector3.zero );
     }
 
-    private void Update()
+    /// <summary>
+    /// カメラ移動の実行。
+    /// </summary>
+    private void Update ( )
     {
-        if(up_button)
-        {
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, new Vector3(transform.position.x, 0.2f, 0.6f), _move_speed);
-        }
-        else if (down_button)
-        {
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, new Vector3(transform.position.x, 0, 0.7f), _move_speed);
-        }
-        else if(left_button)
-        {
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, new Vector3(0.35f, transform.position.y, 0.6f), _move_speed);
-        }
-        else if(right_button)
-        {
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, new Vector3(-0.35f, transform.position.y, 0.6f), _move_speed);
-        }
-        gameObject.transform.LookAt(Vector3.zero);
+        float size = _moveSpeed * Time.deltaTime;
+        _move.Set( _delta.x * size, _delta.y * size );
+        gameObject.transform.Translate(_move);
+        gameObject.transform.LookAt( Vector3.zero );
+        _move.Set( 0, 0 );
     }
 }
