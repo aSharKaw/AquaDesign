@@ -27,7 +27,9 @@ public class BiologicalManager
     /// </summary>
     private GameObject _water;
 
-    /// 水インスタンスの取得と、魚の管理クラスを初期化しています。
+    /// <summary>
+    ///  水槽インスタンスの取得と、魚管理クラスの初期化をしています。
+    /// </summary>
     private BiologicalManager ( )
     {
         GameObject water_pot = GameObject.Find( "WaterPot" );
@@ -42,14 +44,15 @@ public class BiologicalManager
     /// <returns>管理しているFishManagerを返す。</returns>
     public FishManager GetFishManager ( )
     {
-        GameObject water_pot = GameObject.Find("WaterPot");
-        _water = water_pot.transform.FindChild("Water").gameObject;
+        GameObject water_pot = GameObject.Find( "WaterPot" );
+        _water = water_pot.transform.FindChild( "Water" ).gameObject;
         //assetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/resources");
+        return _fishManager;
     }
 
     /// <summary>
     /// シングルトンのインスタンスを返す。
     /// </summary>
     /// <returns>シングルトンのインスタンス。</returns>
-    private static BiologicalManager Instance ( ) { return _self; }
+    public static BiologicalManager Instance ( ) { return _self; }
 }
