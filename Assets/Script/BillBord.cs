@@ -1,4 +1,4 @@
-﻿b using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 水草ビルボードスクリプト

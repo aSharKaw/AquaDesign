@@ -68,19 +68,6 @@ public class UICreate : MonoBehaviour
     }
 
     /// <summary>
-    /// 指定したオブジェクトから、子要素にある、指定した名前のボタンコンポネントを取得して返す。
-    /// </summary>
-    /// <param name="obj">ボタンを子にもつオブジェクト</param>
-    /// <param name="name">取得するボタンオブジェクトの名前</param>
-    /// <returns>指定された名前のボタンコンポネント</returns>
-    private Button GetButtonComponent ( GameObject obj, string name )
-    {
-        Button btn = obj.transform.FindChild( name ).GetComponent<Button>();
-        Assert.IsNotNull( btn );
-        return btn;
-    }
-
-    /// <summary>
     /// OnClickイベントの作成
     /// </summary>
     /// <param name="fishUI">UI単位をまとめるオブジェクト。</param>
@@ -134,6 +121,19 @@ public class UICreate : MonoBehaviour
         GameObject alreadyUI = GameObject.Find( "FishUI" ).gameObject;
         if (alreadyUI == null) return;
         Destroy( alreadyUI );
+    }
+
+    /// <summary>
+    /// 指定したオブジェクトから、子要素にある、指定した名前のボタンコンポネントを取得して返す。
+    /// </summary>
+    /// <param name="obj">ボタンを子にもつオブジェクト</param>
+    /// <param name="name">取得するボタンオブジェクトの名前</param>
+    /// <returns>指定された名前のボタンコンポネント</returns>
+    private Button GetButtonComponent ( GameObject obj, string name )
+    {
+        Button btn = obj.transform.FindChild( name ).GetComponent<Button>();
+        Assert.IsNotNull( btn );
+        return btn;
     }
 
     /// <summary>
