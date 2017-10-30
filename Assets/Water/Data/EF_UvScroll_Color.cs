@@ -4,12 +4,12 @@ using System.Collections;
 
 [ExecuteInEditMode]
 public class EF_UvScroll_Color : MonoBehaviour {
-
+    /*
 
     /// <summary>
     /// 作成者：阿部慶照（ねこかつ）
     /// 作成日：2017/02/24
-    /// 
+    ///
     /// 使用用途
     /// ・UVオートスクロール対応
     /// ・UVタイリング対応
@@ -51,7 +51,7 @@ public class EF_UvScroll_Color : MonoBehaviour {
     float offsetX = 0;
     float offsetY = 0;
 
-    
+
 
     //起動時
     void Start()
@@ -79,7 +79,7 @@ public class EF_UvScroll_Color : MonoBehaviour {
     //50FPS固定アップデート
     void FixedUpdate()
     {
-        
+
 
         //UVスクロール
         if (AutoUvScroll == true)
@@ -91,7 +91,7 @@ public class EF_UvScroll_Color : MonoBehaviour {
             offsetX += _AutoScrollSpeed.x;
             offsetY += _AutoScrollSpeed.y;
 
-            
+
         }
         else
         {
@@ -138,5 +138,5 @@ public class EF_UvScroll_Color : MonoBehaviour {
     }
 
 
-
+    //*/
 }
