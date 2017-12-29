@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 /// <summary>
 /// 水槽全体の管理をします。
 /// </summary>
-public class BiologicalManager
+public class BiologicalManager : MonoBehaviour
 {
     /// <summary>
     ///このBiologicalManagerが複数作られた時に、
@@ -12,10 +12,6 @@ public class BiologicalManager
     /// </summary>
     static private int _instantiated = 0;
 
-    /// <summary>
-    /// 初期化されたシングルトンインスタンス
-    /// </summary>
-    private static BiologicalManager _self = new BiologicalManager();
 
     /// <summary>
     /// 魚の管理を行っているインスタンスです。
@@ -30,7 +26,7 @@ public class BiologicalManager
     /// <summary>
     ///  水槽インスタンスの取得と、魚管理クラスの初期化をしています。
     /// </summary>
-    private BiologicalManager ( )
+    private void Awake ( )
     {
         GameObject water_pot = GameObject.Find( "WaterPot" );
         Assert.IsNotNull( water_pot );
@@ -49,10 +45,4 @@ public class BiologicalManager
         //assetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/resources");
         return _fishManager;
     }
-
-    /// <summary>
-    /// シングルトンのインスタンスを返す。
-    /// </summary>
-    /// <returns>シングルトンのインスタンス。</returns>
-    public static BiologicalManager Instance ( ) { return _self; }
 }

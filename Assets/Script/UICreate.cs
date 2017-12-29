@@ -32,12 +32,17 @@ public class UICreate : MonoBehaviour
     /// <param name="arr"></param>
     public void CreateUI ( ArrayList arr )
     {
+        Debug.LogFormat( "{0} : {1}", this.GetType().Name, new System.Diagnostics.StackFrame().GetMethod().Name );
         GameObject FishUIHead = new GameObject( "FishUI" );
         FishUIHead.transform.parent = _canvas.transform;
 
-        for (int i = 0; i < _PAGE_ELEMENT; i++)
+        Debug.LogFormat( "Count {0}", arr.Count );
+
+        for (int i = 0; i < _PAGE_ELEMENT && i < arr.Count ; i++)
         {
             BioData data = ( BioData )arr[i];
+            Debug.LogFormat( "Count {0}, data name : {1}", arr.Count, data.GetNameEn() );
+
             if (data.GetNameEn().Length < 1) continue;
             CreateUITip( FishUIHead, i, data );
         }
@@ -48,13 +53,15 @@ public class UICreate : MonoBehaviour
     /// </summary>
     /// <param name="page">表示する予定のページインデックス</param>
     /// <returns>表示される要素の配列</returns>
-    public ArrayList GetPageElement ( int page )
+    public void GetPageElement ( int page )
     {
         DeleteUI();
         ArrayList arr = BioDataManager.Instance().GetArray();
         int pageStart = page * _PAGE_ELEMENT;
         ArrayList pageData = ArrayListUtil<BioData>.Slice( arr, pageStart, pageStart + _PAGE_ELEMENT );
-        return pageData;
+
+
+        CreateUI( pageData );
     }
 
     /// <summary>
@@ -100,6 +107,7 @@ public class UICreate : MonoBehaviour
     /// <param name="data">生成するオブジェクトのデータが入ったインスタンス</param>
     private void CreateUITip ( GameObject FishUIHead, int i, BioData data )
     {
+        Debug.LogFormat( "uihead name :{0}, data en name :{1}", FishUIHead.name, data.GetNameEn() );
         GameObject fishUI;
         int posx = 820 + ( ( i % 2 ) * 95 );
         int posy = 370 - ( ( i / 2 ) * 95 );
