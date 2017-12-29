@@ -21,39 +21,44 @@ public class FishMove : MonoBehaviour
     [SerializeField]
     private bool ground;
 
-    private Vector3 SetPosition()
+    private Vector3 SetPosition ( )
     {
-        GameObject water_pot = GameObject.Find("WaterPot");
-        GameObject _water = water_pot.transform.FindChild("Water").gameObject;
-        if(!ground)
-        {
-            return new Vector3(Random.Range(_water.transform.localScale.x / -2, _water.transform.localScale.x / 2), Random.Range(_water.transform.localScale.y / -2, _water.transform.localScale.y / 2), Random.Range(_water.transform.localScale.z / -2, _water.transform.localScale.z / 2));
-        }
-        else
-        {
-            return new Vector3(Random.Range(_water.transform.localScale.x / -2, _water.transform.localScale.x / 2), (_water.transform.localScale.y / -2) + gameObject.transform.FindChild("body").gameObject.transform.localScale.y, Random.Range(_water.transform.localScale.z / -2, _water.transform.localScale.z / 2));
-        }
+        GameObject water_pot = GameObject.Find( "WaterPot" );
+        GameObject _water = water_pot.transform.FindChild( "Water" ).gameObject;
+        var localScale = _water.transform.localScale;
+        var ranX = Random.Range( -1.0f, 1.0f );
+        var ranY = Random.Range( -1.0f, 1.0f );
+        var ranZ = Random.Range( -1.0f, 1.0f );
+        var x = ranX * localScale.x / 2;
+        var y = ranY * localScale.y / 2;
+        var z = ranZ * localScale.z / 2;
+        var y2 = ( _water.transform.localScale.y / -2 ) + gameObject.transform.FindChild( "body" ).gameObject.transform.localScale.y;
+
+        return new Vector3( x, ( !ground ) ? y : y2, z );
     }
 
-    void Start()
+    void Start ( )
     {
         _swim_flug = false;
         _count = 0;
         _wait_count = 0;
 
         _target_position = SetPosition();
-        _child = transform.FindChild("body").gameObject;
+        _child = transform.FindChild( "body" ).gameObject;
 
         //サイズが小さいため移動速度を調整
         move_speed = move_speed / 1000;
 
-        if (!nonAnimation)
+        if (nonAnimation)
         {
-            _anima = _child.GetComponent<Animator>();
+            _child.AddComponent<Animator>();
         }
+        _anima = _child.GetComponent<Animator>();
+
+
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit ( Collider other )
     {
         if (other.name == "Water")
         {
@@ -62,7 +67,7 @@ public class FishMove : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter ( Collider other )
     {
         if (other.name == "FishTank" || other.name == "Floor")
         {
@@ -72,7 +77,7 @@ public class FishMove : MonoBehaviour
         }
     }
 
-    void Update()
+    void Update ( )
     {
         if (!nonAnimation)
         {
@@ -81,51 +86,46 @@ public class FishMove : MonoBehaviour
             {
                 idle();
                 _target_position = SetPosition();
-       
+
                 if (!idle())
                 {
                     _swim_flug = true;
                 }
+                return;
             }
-            else if (_swim_flug)
+            swim( _target_position );
+            if (!swim( _target_position ))
             {
-                swim(_target_position);
-                if (!swim(_target_position))
-                {
-                    _swim_flug = false;
-                }
+                _swim_flug = false;
             }
+            return;
         }
-        else if (nonAnimation)
+
+
+        if (!_swim_flug)
         {
+            nonMotion_idle();
+            _target_position = SetPosition();
 
-            if (!_swim_flug)
+            if (!nonMotion_idle())
             {
-                nonMotion_idle();
-                _target_position = SetPosition();
-
-                if (!nonMotion_idle())
-                {
-                    _swim_flug = true;
-                }
+                _swim_flug = true;
             }
-            else if (_swim_flug)
-            {
-                nonMotion_swim(_target_position);
-                if (!nonMotion_swim(_target_position))
-                {
-                    _swim_flug = false;
-                }
-            }
+            return;
+        }
+        nonMotion_swim( _target_position );
+        if (!nonMotion_swim( _target_position ))
+        {
+            _swim_flug = false;
         }
     }
 
     //アイドル時
-    bool idle()
+    bool idle ( )
     {
         if (_count == 0)
         {
-            _wait_count = (int)Random.Range(1.0f, 4.0f);
+            _wait_count = ( int )Random.Range( 1.0f, 4.0f );
         }
         if (_count > _wait_count * 60)
         {
@@ -139,27 +139,27 @@ public class FishMove : MonoBehaviour
     }
 
     //移動時
-    bool swim(Vector3 target_position)
+    bool swim ( Vector3 target_position )
     {
-        if (target_position == Vector3.MoveTowards(this.transform.position, target_position, move_speed))
+        if (target_position == Vector3.MoveTowards( this.transform.position, target_position, move_speed ))
         {
-            _anima.SetBool("swimming", false);
+            _anima.SetBool( "swimming", false );
             return false;
         }
 
-        this.transform.position = Vector3.MoveTowards(this.transform.position, target_position, move_speed);
-        this.transform.LookAt(target_position);
-        _anima.SetBool("swimming", true);
+        this.transform.position = Vector3.MoveTowards( this.transform.position, target_position, move_speed );
+        this.transform.LookAt( target_position );
+        _anima.SetBool( "swimming", true );
         return true;
     }
 
     //アニメーションが無いテクスチャ
     //アイドル時
-    bool nonMotion_idle()
+    bool nonMotion_idle ( )
     {
         if (_count == 0)
         {
-            _wait_count = (int)Random.Range(1.0f, 4.0f);
+            _wait_count = ( int )Random.Range( 1.0f, 4.0f );
         }
         if (_count > _wait_count * 60)
         {
@@ -173,15 +173,15 @@ public class FishMove : MonoBehaviour
     }
 
     //移動時
-    bool nonMotion_swim(Vector3 target_position)
+    bool nonMotion_swim ( Vector3 target_position )
     {
-        if (target_position == Vector3.MoveTowards(this.transform.position, target_position, move_speed))
+        if (target_position == Vector3.MoveTowards( this.transform.position, target_position, move_speed ))
         {
             return false;
         }
 
-        this.transform.position = Vector3.MoveTowards(this.transform.position, target_position, move_speed);
-        this.transform.LookAt(target_position);
+        this.transform.position = Vector3.MoveTowards( this.transform.position, target_position, move_speed );
+        this.transform.LookAt( target_position );
         return true;
     }
 
