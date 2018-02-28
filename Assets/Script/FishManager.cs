@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AY_Util;
 
 /// <summary>
 /// 魚の管理を行うクラスです
@@ -38,11 +39,15 @@ public class FishManager
     /// </summary>
     /// <param name="type">魚の種類です</param>
     /// <param name="fish_name">魚の名前です</param>
-    public void FishCreate ( string type, string fish_name )
+    public void FishCreate ( BioType type, string fish_name )
     {
+        var frame1 = new System.Diagnostics.StackFrame( 1 );
+        var frame0 = new System.Diagnostics.StackFrame( 0 );
+        Debug.LogFormat( " {0} <= {1} : {2} ", frame0.GetMethod().Name, frame1.GetType().Name, frame1.GetMethod().Name );
         DictionaryFix( fish_name );
         Vector3 waterScale = _water.transform.localScale;
         GameObject objResource = LoadRecource( type, fish_name );
+
         GameObject obj = GameObject.Instantiate( objResource );
         obj.transform.position = FirstPosition( waterScale );
         obj.transform.rotation = _firstDirection;
@@ -93,8 +98,13 @@ public class FishManager
     /// <param name="Type">魚の種類を指定します。</param>
     /// <param name="fish_name">魚の名前です。</param>
     /// <returns>読み込まれたリソースを返します。</returns>
-    private GameObject LoadRecource ( string Type, string fish_name )
+    private GameObject LoadRecource ( BioType type, string fish_name )
     {
-        return Resources.Load( "Prefub/" + Type + "/" + fish_name ) as GameObject;
+        string[] folderName = { "Fish", "Leaf", "Accessory", "Terrain" };
+
+        var str = "Prefub/" + folderName[(int) type] + "/" + fish_name;
+        Debug.Log( "Load : " + str );
+
+        return Resources.Load( str ) as GameObject;
     }
 }

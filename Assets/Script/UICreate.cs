@@ -27,6 +27,19 @@ public class UICreate : MonoBehaviour
     private GameObject _fishUI;
 
     /// <summary>
+    /// 生成用UIチップのルートの位置
+    /// </summary>
+    [SerializeField]
+    private Vector3 _UiHeadPos = new Vector3( -308, -259, 0 );
+
+    /// <summary>
+    /// 生成用UIチップのルートの大きさ
+    /// </summary>
+    [SerializeField]
+    private Vector3 _UiHeadScale = new Vector3( 0.8f, 0.8f, 1 );
+
+
+    /// <summary>
     /// ボタンなどのUIを作成する。
     /// </summary>
     /// <param name="arr"></param>
@@ -35,6 +48,7 @@ public class UICreate : MonoBehaviour
         Debug.LogFormat( "{0} : {1}", this.GetType().Name, new System.Diagnostics.StackFrame().GetMethod().Name );
         GameObject FishUIHead = new GameObject( "FishUI" );
         FishUIHead.transform.parent = _canvas.transform;
+
 
         Debug.LogFormat( "Count {0}", arr.Count );
 
@@ -46,6 +60,11 @@ public class UICreate : MonoBehaviour
             if (data.GetNameEn().Length < 1) continue;
             CreateUITip( FishUIHead, i, data );
         }
+
+
+        FishUIHead.transform.localPosition = _UiHeadPos;
+        FishUIHead.transform.localScale = _UiHeadScale;
+
     }
 
     /// <summary>
@@ -86,13 +105,13 @@ public class UICreate : MonoBehaviour
         Button createButton = GetButtonComponent( fishUI, "CreateButton" );
         createButton.onClick.AddListener( ( ) =>
         {
-            fish.FishCreate( data.GetBioType().ToString(), data.GetNameJp() );
+            fish.FishCreate( data.GetBioType(), data.GetNameEn() );
         } );
 
         Button deleteButton = GetButtonComponent( fishUI, "DeleteButton" );
-        if (BioType.FISH != data.GetBioType())
+        if (BioType.FISH == data.GetBioType())
         {
-            deleteButton.onClick.AddListener( ( ) => fish.ObjectDelete( data.GetNameJp() ) );
+            deleteButton.onClick.AddListener( ( ) => fish.ObjectDelete( data.GetNameEn() ) );
             return;
         }
         // 魚以外はDeleteButtonは使わないので削除

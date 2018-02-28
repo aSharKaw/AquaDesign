@@ -560,6 +560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10fa68409a67f3247a15eff6ab600a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _UiHeadPos: {x: -308, y: -259, z: 0}
+  _UiHeadScale: {x: 0.8, y: 0.8, z: 1}
 --- !u!114 &311984178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4034,7 +4036,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 311984177}
         m_MethodName: GetPageElement
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
