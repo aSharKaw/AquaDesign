@@ -390,22 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b62ce74e5cc3ca439e1e5dd0dcff047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tiling: {x: 1, y: 1}
-  OffSet: {x: 0, y: 0}
-  AutoScrollSpeed: {x: 0.1, y: -0.1}
-  AutoUvScroll: 1
-  color:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  EmissionColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  HeatTime: 0
-  HeatForce: 0
 --- !u!114 &114114191376292700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -417,22 +401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b62ce74e5cc3ca439e1e5dd0dcff047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tiling: {x: 1, y: 1}
-  OffSet: {x: 0, y: 0}
-  AutoScrollSpeed: {x: 0.1, y: -0.1}
-  AutoUvScroll: 1
-  color:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  EmissionColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  HeatTime: 0
-  HeatForce: 0
 --- !u!114 &114573862603938956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -444,22 +412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b62ce74e5cc3ca439e1e5dd0dcff047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tiling: {x: 1, y: 1}
-  OffSet: {x: 0, y: 0}
-  AutoScrollSpeed: {x: 0.1, y: -0.1}
-  AutoUvScroll: 1
-  color:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  EmissionColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  HeatTime: 0
-  HeatForce: 0
 --- !u!114 &114885771952963656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -471,19 +423,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b62ce74e5cc3ca439e1e5dd0dcff047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tiling: {x: 1, y: 1}
-  OffSet: {x: 0, y: 0}
-  AutoScrollSpeed: {x: 0.1, y: -0.1}
-  AutoUvScroll: 1
-  color:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  EmissionColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  HeatTime: 0
-  HeatForce: 0

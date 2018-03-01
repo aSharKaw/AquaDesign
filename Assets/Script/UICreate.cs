@@ -27,20 +27,44 @@ public class UICreate : MonoBehaviour
     private GameObject _fishUI;
 
     /// <summary>
+    /// 生成用UIチップのルートの位置
+    /// </summary>
+    [SerializeField]
+    private Vector3 _UiHeadPos = new Vector3( -308, -259, 0 );
+
+    /// <summary>
+    /// 生成用UIチップのルートの大きさ
+    /// </summary>
+    [SerializeField]
+    private Vector3 _UiHeadScale = new Vector3( 0.8f, 0.8f, 1 );
+
+
+    /// <summary>
     /// ボタンなどのUIを作成する。
     /// </summary>
     /// <param name="arr"></param>
     public void CreateUI ( ArrayList arr )
     {
+        Debug.LogFormat( "{0} : {1}", this.GetType().Name, new System.Diagnostics.StackFrame().GetMethod().Name );
         GameObject FishUIHead = new GameObject( "FishUI" );
         FishUIHead.transform.parent = _canvas.transform;
 
-        for (int i = 0; i < _PAGE_ELEMENT; i++)
+
+        Debug.LogFormat( "Count {0}", arr.Count );
+
+        for (int i = 0; i < _PAGE_ELEMENT && i < arr.Count ; i++)
         {
             BioData data = ( BioData )arr[i];
+            Debug.LogFormat( "Count {0}, data name : {1}", arr.Count, data.GetNameEn() );
+
             if (data.GetNameEn().Length < 1) continue;
             CreateUITip( FishUIHead, i, data );
         }
+
+
+        FishUIHead.transform.localPosition = _UiHeadPos;
+        FishUIHead.transform.localScale = _UiHeadScale;
+
     }
 
     /// <summary>
@@ -48,13 +72,15 @@ public class UICreate : MonoBehaviour
     /// </summary>
     /// <param name="page">表示する予定のページインデックス</param>
     /// <returns>表示される要素の配列</returns>
-    public ArrayList GetPageElement ( int page )
+    public void GetPageElement ( int page )
     {
         DeleteUI();
         ArrayList arr = BioDataManager.Instance().GetArray();
         int pageStart = page * _PAGE_ELEMENT;
         ArrayList pageData = ArrayListUtil<BioData>.Slice( arr, pageStart, pageStart + _PAGE_ELEMENT );
-        return pageData;
+
+
+        CreateUI( pageData );
     }
 
     /// <summary>
@@ -79,13 +105,13 @@ public class UICreate : MonoBehaviour
         Button createButton = GetButtonComponent( fishUI, "CreateButton" );
         createButton.onClick.AddListener( ( ) =>
         {
-            fish.FishCreate( data.GetBioType().ToString(), data.GetNameJp() );
+            fish.FishCreate( data.GetBioType(), data.GetNameEn() );
         } );
 
         Button deleteButton = GetButtonComponent( fishUI, "DeleteButton" );
-        if (BioType.FISH != data.GetBioType())
+        if (BioType.FISH == data.GetBioType())
         {
-            deleteButton.onClick.AddListener( ( ) => fish.ObjectDelete( data.GetNameJp() ) );
+            deleteButton.onClick.AddListener( ( ) => fish.ObjectDelete( data.GetNameEn() ) );
             return;
         }
         // 魚以外はDeleteButtonは使わないので削除
@@ -100,6 +126,7 @@ public class UICreate : MonoBehaviour
     /// <param name="data">生成するオブジェクトのデータが入ったインスタンス</param>
     private void CreateUITip ( GameObject FishUIHead, int i, BioData data )
     {
+        Debug.LogFormat( "uihead name :{0}, data en name :{1}", FishUIHead.name, data.GetNameEn() );
         GameObject fishUI;
         int posx = 820 + ( ( i % 2 ) * 95 );
         int posy = 370 - ( ( i / 2 ) * 95 );

@@ -9,14 +9,14 @@ namespace AY_Util
     /// <summary>
     /// String utilities library.
     /// </summary>
-    public class StringUtil
+    public static class StringUtil
     {
         /// <summary>
         /// Convert to title case.
         /// </summary>
         /// <param name="str">Convert string.</param>
         /// <returns>Converted string.</returns>
-        public static string ToTitle ( string str )
+        public static string ToTitle ( this string str )
         {
             TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
             return ti.ToTitleCase( str );

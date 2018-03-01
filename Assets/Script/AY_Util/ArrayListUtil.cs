@@ -63,10 +63,11 @@ namespace AY_Util
         /// <returns></returns>
         static public ArrayList Slice (ArrayList arr, int start, int length)
         {
-            Assert.IsTrue( arr.Count > start );
-            Assert.IsTrue( arr.Count <= start + length);
+            UnityEngine.Debug.LogFormat( "before frame: {0}", new System.Diagnostics.StackFrame( 1 ).GetMethod().Name );
+            UnityEngine.Debug.LogFormat( "arr.Count : {0},  start : {1}", arr.Count, start );
+            // Assert.IsTrue( arr.Count <= start + length);
             ArrayList ret = new ArrayList();
-            for (int i = 0; i < arr.Count && i < length; i++)
+            for (int i = 0; i + start < arr.Count && i < length; i++)
                 ret.Add( ( T )arr[i + start] );
             return ret;
         }
